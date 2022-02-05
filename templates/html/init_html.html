@@ -1,0 +1,22 @@
+{% extends 'BASE.html' %}
+{% block mytitle %}首页{% endblock %}
+{% block navitem %}
+    {% if username %}
+        <li class="nav-item">
+            <a class="nav-link" href="#">{{ username }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users/logout/">注销</a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="/users/login/">登录</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/users/register/">注册</a>
+        </li>
+    {% endif %}
+{% endblock %}
+{% block middle %}
+    学无止境
+{% endblock %}

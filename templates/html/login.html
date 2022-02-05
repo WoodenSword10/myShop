@@ -1,0 +1,19 @@
+{% extends 'BASE.html' %}
+{% block mytitle %}登录{% endblock %}
+{% block middle %}
+    <form action='/users/login/' method="POST">
+        <table border="1px" style="margin: auto">
+            <tr>
+                <td>用户名</td>
+                <td><input type="text" placeholder="请输入用户名" name="username"></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input type="password" placeholder="请输入密码" name="password"></td>
+            </tr>
+            <tr>
+               <td colspan="2"><input type="submit" value="注册" style="width: 100%; text-align: center"></td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

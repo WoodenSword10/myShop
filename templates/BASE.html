@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+{% csrf_token %}
+<html lang="en">
+    <head>
+        <title>{% block mytitle %}Bootstrap 实例{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href={% static 'bootstrap-5.1.3-dist/css/bootstrap.css' %} rel="stylesheet">
+        <script src={% static 'bootstrap-5.1.3-dist/js/bootstrap.js' %}></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href='/'>Logo</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">下拉菜单</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">下拉菜单一</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">下拉菜单二</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">下拉菜单三</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">链接</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">链接</a>
+                        </li>
+                        {% block navitem %}
+
+                        {% endblock %}
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="text" placeholder="Search">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid text-center">
+            {% block middle %}{% endblock %}
+        </div>
+        <footer>
+            <p>快乐学习</p>
+        </footer>
+    </body>
+</html>
