@@ -1,4 +1,5 @@
 {% extends 'BASE.html' %}
+{% load static %}
 {% block mytitle %}首页{% endblock %}
 {% block navitem %}
     {% if username %}
@@ -18,5 +19,57 @@
     {% endif %}
 {% endblock %}
 {% block middle %}
-    学无止境
+    <section class="p-5 bg-dark text-light">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md p-5 align-items-center">
+                    <img alt='1' style="width: 50%" class="img-fluid" src="{% static 'img/img1.jpg' %}">
+                </div>
+                <div class="col-md text-center">
+                    <h1>我的技术库</h1>
+                    <p class="lead">主要涉及python　UI设计、django　web开发、机器学习算法、柔性电子制作、数据采集</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-5">
+        <div class="container-fluid">
+            <div class="row g-4">
+                <div class="col-md">
+                    <div class="card bg-secondary text-light text-center">
+                        <div class="card-body">
+                            <div class="card-title">python</div>
+                            <div class="card-text">涉及pyqt5　UI设计、django　web开发等</div>
+                            <br/>
+                            <br/>
+                            <a href="#" class="btn btn-dark">python 回顾</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                     <div class="card bg-dark text-light text-center">
+                        <div class="card-body">
+                            <div class="card-title">人工智能</div>
+                            <div class="card-text">涉及机器学习、深度学习、强化学习</div>
+                            <br/>
+                            <br/>
+                            <a href="#" class="btn btn-primary">人工智能回顾</a>
+                        </div>
+                     </div>
+                </div>
+                <div class="col-md">
+                     <div class="card bg-secondary text-light text-center">
+                        <div class="card-body">
+                            <div class="card-title">android</div>
+                            <div class="card-text">目前主要涉及安卓蓝牙应用开发</div>
+                            <br/>
+                            <br/>
+                            <a href="#" class="btn btn-dark">android回顾</a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
