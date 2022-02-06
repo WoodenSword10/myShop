@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-import myusers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.init_html_view),
     path('users/', include('myusers.urls')),
+    path('microelect/', include('microelect.urls')),
+    path('myML/', include('myML.urls'))
 ]
