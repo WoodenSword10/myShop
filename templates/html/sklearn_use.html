@@ -1,0 +1,169 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}sklearn的使用{% endblock %}
+{% block middle %}
+    <div class="row">
+        <div class="col-4">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
+                <a class="navbar-brand" href="#">sklearn的使用</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">sklearn介绍</a>
+                </nav>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-2">加载数据库</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3 my-1" href="#item-2-1">iris鸢尾花数据库</a>
+                            <a class="nav-link ms-3 my-1" href="#item-2-2">波士顿房价数据库</a>
+                        </nav>
+                    <a class="nav-link" href="#item-3">特征工程</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3 my-1" href="#item-3-1">数据集划分</a>
+                            <a class="nav-link ms-3 my-1" href="#item-3-2">特征预处理</a>
+                        </nav>
+                    <a class="nav-link" href="#item-4">摩擦电传感器</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-4-1">传感机理</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-2">常用材料</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-3">合成方法</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-4">基础测试</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-5">常见应用</a>
+                    </nav>
+                    <a class="nav-link" href="#item-5">压电传感器</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-5-1">传感机理</a>
+                        <a class="nav-link ms-3 my-1" href="#item-5-2">常用材料</a>
+                        <a class="nav-link ms-3 my-1" href="#item-5-3">合成方法</a>
+                        <a class="nav-link ms-3 my-1" href="#item-5-4">基础测试</a>
+                        <a class="nav-link ms-3 my-1" href="#item-5-5">常见应用</a>
+                    </nav>
+                </nav>
+            </nav>
+        </div>
+        <div class="col-8">
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" class="scrollspy-example-2" tabindex="0">
+                <h4 id="item-1">sklearn介绍</h4>
+                <p class="bg-secondary p-2">
+                    sklearn包含的内容：<br/>
+                    1. 分类、聚合、回归<br/>
+                    2. 特征工程<br/>
+                    3. 模型选择和调优<br/>
+                </p>
+                <h4 id="item-2">加载数据库</h4>
+                <p class="bg-secondary p-2">数据库位于<b>sklearn.datasets</b>中</p>
+                <h5 id="item-2-1">iris鸢尾花数据库</h5>
+                <p class="bg-secondary p-2">
+                    # 导包<br/>
+                    from sklearn.datasets import load_iris<br/>
+                    # 加载数据库<br/>
+                    iris = load_iris()<br/>
+                    # 打印数据库全部内容<br/>
+                    print(iris)<br/>
+                    # 打印特征值<br/>
+                    print(iris['data']<br/>
+                    # 打印目标值<br/>
+                    print(iris['target'])<br/>
+                    # 打印数据集描述<br/>
+                    print(iris['DESCR'])<br/>
+                    # 打印目标名<br/>
+                    print(iris['target_names']<br/>
+                    # 打印特征名<br/>
+                    print(iris['feature_names'])<br/>
+                </p>
+                <h5 id="item-2-2">波士顿房价数据库</h5>
+                <p class="bg-secondary p-2">
+                    # 导包<br/>
+                    from sklearn.datasets import load_boston<br/>
+                    # 加载数据库<br/>
+                    bst = load_boston()<br/>
+                    # 打印数据库全部内容<br/>
+                    print(bst)<br/>
+                    # 打印特征值<br/>
+                    print(bst['data']<br/>
+                    # 打印目标值<br/>
+                    print(bst['target'])<br/>
+                    # 打印数据集描述<br/>
+                    print(bst['DESCR'])<br/>
+                    # 打印特征名<br/>
+                    print(bst['feature_names'])<br/>
+                </p>
+                <h4 id="item-3">特征工程</h4>
+                <p class="bg-secondary">
+                    对原始数据进行处理便于后续学习使用
+                </p>
+                <h5 id="item-3-1">数据集划分</h5>
+                <p class="bg-secondary">
+                    # 导包<br/>
+                    from sklearn.datasets import load_iris<br/>
+                    from sklearn.model_selection import train_test_split<br/>
+                    # 获取数据集<br/>
+                    iris = load_iris()<br/>
+                    # 数据划分<br/>
+                    # 训练集的特征值x_train，测试集的特征值x_test，训练集的目标值y_train，测试集的目标值y_test<br/>
+                    x_train, x_test, y_train, y_test = train_test_split(iris['data'], iris['target'], random_state=22)<br/>
+                    # 打印结果<br/>
+                    print('x_train:', x_train)<br/>
+                </p>
+                <h5 id="item-3-2">归一化：通过对原始数据进行变换把数据映射到（默认）【０－１】之间</h5>
+                <p class="text-center bg-dark text-light">
+                    公式:<br/>x` = (x-min)/(max-min)<br/>
+                        x`` = x` * (mx-mi) + mi<br/>
+                    缺点：最大值最小值非常容易受异常点的影响，鲁棒性较差，只适合传统精确小数据场景<br/>
+                </p>
+                <p class="bg-secondary">
+                    # 导包<br/>
+                    from sklearn.datasets import load_iris<br/>
+                    from sklearn.preprocessing import MinMaxScaler<br/>
+                    # 数据准备<br/>
+                    iris = load_iris()<br/>
+                    # 实例化转换器类<br/>
+                    transfer= MinMaxScaler()<br/>
+                    # 调用fit_transform<br/>
+                    data = transfer.fit_transform(iris['data'])<br/>
+                </p>
+                <h5 id="item-3-3">标准化</h5>
+                <p class="text-light bg-dark text-center">
+                    公式：<br/>x` = (x-mean)/a<br/>mean为平均值，a为标准差<br/>作用于每一列<br/>
+                    在已有样本足够多的情况下比较稳定，适合现代嘈杂大数据场景<br/>
+                </p>
+                <p class="bg-secondary">
+                    # 导包<br/>
+                    from sklearn.preprocessing import StandardScaler<br/>
+                    from sklearn.datasets import load_iris<br/>
+                    # 获取数据<br/>
+                    iris = load_iris()<br/>
+                    # 实例化转换器类<br/>
+                    transfer = StandardScaler()<br/>
+                    # 调用fit_transform<br/>
+                    data = transfer.fit_transform(iris['data'])<br/>
+                    # 打印结果<br/>
+                    print('标准化结果：', data)<br/>
+                    print('每一列特征的平均值：', transfer.mean_)<br/>
+                    print('每一列特征的方差：', transfer.val_)<br/>
+                </p>
+                <h5 id="item-3-4">交叉验证</h5>
+                <h5 id="item-4-1">传感机理</h5>
+                <p>传感器受到应变后，导致器件内部的导电通路增多，进而导致器件的导电性增强，电阻下降</p>
+                <h5 id="item-4-2">常用材料</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-4-3">合成方法</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-4-4">基础测试</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-4-5">常见应用</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h4 id="item-5">压电传感器</h4>
+                <p>This is some placeholder content for the scrollspy page. Note that as you scroll down the page, the appropriate navigation link is highlighted. It's repeated throughout the component example. We keep adding some more example copy here to emphasize the scrolling and highlighting.</p>
+                <h5 id="item-5-1">传感机理</h5>
+                <p>传感器受到应变后，导致器件内部的导电通路增多，进而导致器件的导电性增强，电阻下降</p>
+                <h5 id="item-5-2">常用材料</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-5-3">合成方法</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-5-4">基础测试</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-5-5">常见应用</h5>
+                <p>碳纳米管、石墨烯...</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

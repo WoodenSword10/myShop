@@ -1,0 +1,81 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}柔性电子{% endblock %}
+{% block middle %}
+    <div class="row">
+        <div class="col-4">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
+                <a class="navbar-brand" href="#">柔性电子</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">电阻式传感器</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link ms-3 my-1" href="#item-1-1">传感机理</a>
+                            <a class="nav-link ms-3 my-1" href="#item-1-2">常用材料</a>
+                            <a class="nav-link ms-3 my-1" href="#item-1-3">合成方法</a>
+                            <a class="nav-link ms-3 my-1" href="#item-1-4">基础测试</a>
+                            <a class="nav-link ms-3 my-1" href="#item-1-5">常见应用</a>
+                        </nav>
+                    <a class="nav-link" href="#item-2">电容式传感器</a>
+                    <a class="nav-link" href="#item-3">摩擦电传感器</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-3-1">传感机理</a>
+                        <a class="nav-link ms-3 my-1" href="#item-3-2">常用材料</a>
+                        <a class="nav-link ms-3 my-1" href="#item-3-3">合成方法</a>
+                        <a class="nav-link ms-3 my-1" href="#item-3-4">基础测试</a>
+                        <a class="nav-link ms-3 my-1" href="#item-3-5">常见应用</a>
+                    </nav>
+                    <a class="nav-link" href="#item-4">压电传感器</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ms-3 my-1" href="#item-4-1">传感机理</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-2">常用材料</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-3">合成方法</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-4">基础测试</a>
+                        <a class="nav-link ms-3 my-1" href="#item-4-5">常见应用</a>
+                    </nav>
+                </nav>
+            </nav>
+        </div>
+        <div class="col-8">
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" class="scrollspy-example-2" tabindex="0">
+                <h4 id="item-1">电阻式传感器</h4>
+                <p>传感器被按压或拉伸时器件的电阻会发生变化，是很常见的传感器类型</p>
+                <h5 id="item-1-1">传感机理</h5>
+                <p>传感器受到应变后，导致器件内部的导电通路增多，进而导致器件的导电性增强，电阻下降</p>
+                <h5 id="item-1-2">常用材料</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-1-3">合成方法</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-1-4">基础测试</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-1-5">常见应用</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h4 id="item-2">电容式传感器</h4>
+                <p>传感器在受到应变后，电极之间的距离缩短导致器件的电容变化</p>
+                <h4 id="item-3">摩擦电传感器</h4>
+                <p>This is some placeholder content for the scrollspy page. Note that as you scroll down the page, the appropriate navigation link is highlighted. It's repeated throughout the component example. We keep adding some more example copy here to emphasize the scrolling and highlighting.</p>
+                <h5 id="item-3-1">传感机理</h5>
+                <p>传感器受到应变后，导致器件内部的导电通路增多，进而导致器件的导电性增强，电阻下降</p>
+                <h5 id="item-3-2">常用材料</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-3-3">合成方法</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-3-4">基础测试</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-3-5">常见应用</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h4 id="item-4">压电传感器</h4>
+                <p>This is some placeholder content for the scrollspy page. Note that as you scroll down the page, the appropriate navigation link is highlighted. It's repeated throughout the component example. We keep adding some more example copy here to emphasize the scrolling and highlighting.</p>
+                <h5 id="item-4-1">传感机理</h5>
+                <p>传感器受到应变后，导致器件内部的导电通路增多，进而导致器件的导电性增强，电阻下降</p>
+                <h5 id="item-4-2">常用材料</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-4-3">合成方法</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-4-4">基础测试</h5>
+                <p>碳纳米管、石墨烯...</p>
+                <h5 id="item-4-5">常见应用</h5>
+                <p>碳纳米管、石墨烯...</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
