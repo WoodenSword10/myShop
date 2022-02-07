@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.init_html_view),
     path('users/', include('myusers.urls')),
     path('microelect/', include('microelect.urls')),
-    path('myML/', include('myML.urls'))
+    path('myML/', include('myML.urls')),
+    path('mydjango/', include('mydjango.urls')),
 ]

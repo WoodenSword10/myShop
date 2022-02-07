@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'myusers',
     'microelect',
     'myML',
+    'mydjango',
 ]
 
 MIDDLEWARE = [
