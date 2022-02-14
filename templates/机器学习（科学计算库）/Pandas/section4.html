@@ -15,33 +15,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../static/机器学习（科学计算库）/gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../../static/机器学习（科学计算库）/gitbook/images/favicon.ico" type="image/x-icon">
         
-    <link rel="stylesheet" href="../gitbook/style.css">
+    <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/style.css">
     
         
-        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-katex/katex.min.css">
-        
-    
-        
-        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+        <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-katex/katex.min.css">
         
     
         
-        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-splitter/splitter.css">
+        <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-expandable-chapters/expandable-chapters.css">
         
     
         
-        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-splitter/splitter.css">
         
     
         
-        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-search/search.css">
+        <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-highlight/website.css">
         
     
         
-        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-fontsettings/website.css">
         
     
     
@@ -799,13 +799,13 @@
 <pre><code class="lang-python"><span class="hljs-comment"># &#x903B;&#x8F91;&#x5224;&#x65AD;&#x7684;&#x7ED3;&#x679C;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x7B5B;&#x9009;&#x7684;&#x4F9D;&#x636E;</span>
 data[data[<span class="hljs-string">&quot;open&quot;</span>] &gt; <span class="hljs-number">23</span>].head()
 </code></pre>
-<p><img src="images/&#x903B;&#x8F91;&#x4E3E;&#x4F8B;1.png" alt="image-20190624115656264"></p>
+<p><img src="../../../static/机器学习（科学计算库）/Pandas/images/&#x903B;&#x8F91;&#x4E3E;&#x4F8B;1.png" alt="image-20190624115656264"></p>
 <ul>
 <li>&#x5B8C;&#x6210;&#x591A;&#x4E2A;&#x903B;&#x8F91;&#x5224;&#x65AD;&#xFF0C;</li>
 </ul>
 <pre><code class="lang-python">data[(data[<span class="hljs-string">&quot;open&quot;</span>] &gt; <span class="hljs-number">23</span>) &amp; (data[<span class="hljs-string">&quot;open&quot;</span>] &lt; <span class="hljs-number">24</span>)].head()
 </code></pre>
-<p><img src="images/&#x903B;&#x8F91;&#x4E3E;&#x4F8B;2.png" alt="image-20190624115753590"></p>
+<p><img src="../../../static/机器学习（科学计算库）/Pandas/images/&#x903B;&#x8F91;&#x4E3E;&#x4F8B;2.png" alt="image-20190624115753590"></p>
 <h3 id="22--&#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x51FD;&#x6570;">2.2  &#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x51FD;&#x6570;</h3>
 <ul>
 <li>query(expr)<ul>
@@ -823,14 +823,14 @@ data[data[<span class="hljs-string">&quot;open&quot;</span>] &gt; <span class="h
 <pre><code class="lang-python"><span class="hljs-comment"># &#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x503C;&#x8FDB;&#x884C;&#x4E00;&#x4E2A;&#x5224;&#x65AD;&#xFF0C;&#x4ECE;&#x800C;&#x8FDB;&#x884C;&#x7B5B;&#x9009;&#x64CD;&#x4F5C;</span>
 data[data[<span class="hljs-string">&quot;open&quot;</span>].isin([<span class="hljs-number">23.53</span>, <span class="hljs-number">23.85</span>])]
 </code></pre>
-<p><img src="images/isin.png" alt="image-20190624115947522"></p>
+<p><img src="../../../static/机器学习（科学计算库）/Pandas/images/isin.png" alt="image-20190624115947522"></p>
 <h2 id="3-&#x7EDF;&#x8BA1;&#x8FD0;&#x7B97;">3 &#x7EDF;&#x8BA1;&#x8FD0;&#x7B97;</h2>
 <h3 id="31-describe">3.1 describe</h3>
 <p>&#x7EFC;&#x5408;&#x5206;&#x6790;: &#x80FD;&#x591F;&#x76F4;&#x63A5;&#x5F97;&#x51FA;&#x5F88;&#x591A;&#x7EDF;&#x8BA1;&#x7ED3;&#x679C;,<code>count</code>, <code>mean</code>, <code>std</code>, <code>min</code>, <code>max</code> &#x7B49;</p>
 <pre><code class="lang-python"><span class="hljs-comment"># &#x8BA1;&#x7B97;&#x5E73;&#x5747;&#x503C;&#x3001;&#x6807;&#x51C6;&#x5DEE;&#x3001;&#x6700;&#x5927;&#x503C;&#x3001;&#x6700;&#x5C0F;&#x503C;</span>
 data.describe()
 </code></pre>
-<p><img src="images/describe&#x7ED3;&#x679C;.png" alt="describe&#x7ED3;&#x679C;"></p>
+<p><img src="../../../static/机器学习（科学计算库）/Pandas/images/describe&#x7ED3;&#x679C;.png" alt="describe&#x7ED3;&#x679C;"></p>
 <h3 id="32-&#x7EDF;&#x8BA1;&#x51FD;&#x6570;">3.2 &#x7EDF;&#x8BA1;&#x51FD;&#x6570;</h3>
 <p>Numpy&#x5F53;&#x4E2D;&#x5DF2;&#x7ECF;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x6F14;&#x793A;min(&#x6700;&#x5C0F;&#x503C;), max(&#x6700;&#x5927;&#x503C;), mean(&#x5E73;&#x5747;&#x503C;), median(&#x4E2D;&#x4F4D;&#x6570;), var(&#x65B9;&#x5DEE;), std(&#x6807;&#x51C6;&#x5DEE;),mode(&#x4F17;&#x6570;)&#x7ED3;&#x679C;:</p>
 <table>
@@ -1013,7 +1013,7 @@ dtype: object
 </tbody>
 </table>
 <p><strong>&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x7D2F;&#x8BA1;&#x7EDF;&#x8BA1;&#x51FD;&#x6570;&#x600E;&#x4E48;&#x7528;&#xFF1F;</strong></p>
-<p><img src="images/cumsum1.png" alt="cumsum1"></p>
+<p><img src="../../../static/机器学习（科学计算库）/Pandas/images/cumsum1.png" alt="cumsum1"></p>
 <p>&#x4EE5;&#x4E0A;&#x8FD9;&#x4E9B;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x5BF9;series&#x548C;dataframe&#x64CD;&#x4F5C;</p>
 <p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x6309;&#x7167;&#x65F6;&#x95F4;&#x7684;&#x4ECE;&#x524D;&#x5F80;&#x540E;&#x6765;&#x8FDB;&#x884C;&#x7D2F;&#x8BA1;</p>
 <ul>
@@ -1047,7 +1047,7 @@ stock_rise.cumsum()
 <span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">23</span>     <span class="hljs-number">23.74</span>
 </code></pre>
 <p><strong>&#x90A3;&#x4E48;&#x5982;&#x4F55;&#x8BA9;&#x8FD9;&#x4E2A;&#x8FDE;&#x7EED;&#x6C42;&#x548C;&#x7684;&#x7ED3;&#x679C;&#x66F4;&#x597D;&#x7684;&#x663E;&#x793A;&#x5462;&#xFF1F;</strong></p>
-<p><img src="images/cumsum.png" alt="cumsum"></p>
+<p><img src="../../../static/机器学习（科学计算库）/Pandas/images/cumsum.png" alt="cumsum"></p>
 <p>&#x5982;&#x679C;&#x8981;&#x4F7F;&#x7528;plot&#x51FD;&#x6570;&#xFF0C;&#x9700;&#x8981;&#x5BFC;&#x5165;matplotlib.</p>
 <pre><code class="lang-python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
 <span class="hljs-comment"># plot&#x663E;&#x793A;&#x56FE;&#x5F62;</span>
@@ -1115,30 +1115,30 @@ dtype: float64
 </div>
 
         
-<script src="../gitbook/app.js"></script>
+<script src="../../../static/机器学习（科学计算库）/gitbook/app.js"></script>
 
     
-    <script src="../gitbook/plugins/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
-    
-
-    
-    <script src="../gitbook/plugins/gitbook-plugin-splitter/splitter.js"></script>
+    <script src="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
     
 
     
-    <script src="../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    <script src="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-splitter/splitter.js"></script>
     
 
     
-    <script src="../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    <script src="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
     
 
     
-    <script src="../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    <script src="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-search/search.js"></script>
     
 
     
-    <script src="../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    <script src="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../../../static/机器学习（科学计算库）/gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
     
 
 <script>

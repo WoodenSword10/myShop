@@ -1,0 +1,271 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}python常用库{% endblock %}
+{% block middle %}
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            numpy
+            </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body text-center">
+                    <h2>numpy介绍</h2>
+                    <p class="bg-secondary">numpy是一个开源的python科学计算库，用于快速处理任意维度的数组
+                        <br/>numpy支持常用的数组和矩阵操作
+                        <br/>numpy使用ndarray对象来处理多维数据，该对象是一个快速而灵活的大数据容器
+                    </p>
+                    <h3>ndarray类型</h3>
+                    <p class="bg-secondary">N维数组类型，描述了相同类型的items的集合
+                        <br/>优势在于相比与list来说ndarray的计算速度很快
+                        <br/>ndarray支持并行化运算（向量化运算）
+                        <br/>ndarray底层是用C语言写的，效率更高，释放了GIL</p>
+                    <table border="3px" style="text-align: center">
+                        <tr>
+                            <TD>属性名字</TD>
+                            <TD>属性解释</TD>
+                        </tr>
+                        <tr>
+                            <td>ndarray.shape</td>
+                            <td>数组维度的元组</td>
+                        </tr>
+                        <tr>
+                            <td>ndarray.ndim</td>
+                            <td>数组维度</td>
+                        </tr>
+                        <tr>
+                            <td>ndarray.size</td>
+                            <td>数组中的元素数量</td>
+                        </tr>
+                        <tr>
+                            <td>ndarray.itemsize</td>
+                            <td>一个数组元素的长度（字节）</td>
+                        </tr>
+                        <tr>
+                            <td>ndarray.dtype</td>
+                            <td>数组元素的类型</td>
+                        </tr>
+                    </table>
+                    <h3>ndarray数组的生成方法</h3>
+                    <h6>生成０和１的数组</h6>
+                    <div class="bg-dark text-sm-start">
+                         <code>
+                            import numpy as np<br/>
+                             ＃ 全１数组<br/>
+                             ones = np.ones([2,2])<br/>
+                             # 根据已有数组创建全０数组<br/>
+                             zero = np.zeros(ones)<br/>
+                             # 全０数组 <br/>
+                             zeros = np.zeros([3,3])<br/>
+                             # 根据已有数组创建全１数组<br/>
+                             one = np.ones(zeros)<br/>
+                        </code>
+                    </div>
+                    <h6>从列表或数组创建</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            # 从列表创建<br/>
+                            a = np.array([[1,2,3],[4,5,6]])<br/>
+                            # 从现有数组当中创建，深拷贝方式<br/>
+                            a1 = np.array(a)<br/>
+                            # 相当于索引的形式，并没有真正的创建一个新的数组<br/>
+                            a2 = np.asarray(a)
+                        </code>
+                    </div>
+                    <h6>生成固定范围的数组</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            np.linspace(start, stop, num, endpoint)<br/>
+                            start：序列的起始值<br/>
+                            stop：序列的终止值<br/>
+                            num：要生成的等间隔样例数量，默认５０<br/>
+                            endpoint：序列中是否包含stop值，默认为ture<br/>
+                            <br/>
+                            np.linspace(0, 100, 11)
+                        </code>
+                    </div>
+                    <h6>创建等差数组</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            np.arange(start, stop, step, dtype)<br/>
+                            创建等差数组——指定步长<br/>
+                            <br/>
+                            np.arange(10, 50, 2)
+                        </code>
+                    </div>
+                    <h6>创建等比数列</h6>
+                    <div class="text-sm-start bg-dark">
+                        <code>
+                            np.logspace(start, stop, num)<br/>
+                            创建等比数列<br/>
+                            参数: num：要生成的等比数列数量，默认为５０<br/>
+                            <br/>
+                            np.logspace(0, 2, 3)
+                        </code>
+                    </div>
+                    <h6>正态分布</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            np.random.randn(d0, d1, ..., dn)<br/>
+                            功能：从标准正态分布中返回一个或多个样本值<br/>
+                            <br/>
+                            np.random.normal(loc=0.0, scale=1.0, size=None)<br/>
+                            loc:float 此概率分布的均值（对应着整个分布的中心centre）<br/>
+                            scale:float 此概率分布的标准差（对应于分布的宽度，scale越大越矮胖，scale越小越瘦高）<br/>
+                            size:int or tuple of ints 输出的shape，默认为None，只输出一个值<br/>
+                            <br/>
+                            np.random.standard_normal(size=None)<br/>
+                            返回指定形状的标准正态分布的数组<br/>
+                        </code>
+                    </div>
+                    <h6>均匀分布</h6>
+                    <div class="text-sm-start bg-dark">
+                        <code>
+                            np.random.rand(d0, d1, ..., dn)<br/>
+                            返回[0.0, 1.0)内的一组均匀分布的值<br/>
+                            <br/>
+                            np.random.uniform(low=0.0, high=1.0, size=None)<br/>
+                            功能：从一个均匀分布[low, high)中随机采样，注意定义域是左闭右开，即包含low，不包含high<br/>
+                            参数介绍：<br/>
+                            low：采样下界，float类型，默认值为０；<br/>
+                            high：采样上界, float类型，默认值为１；<br/>
+                            size：输出样本数目，为int或元组(tuple)类型，例如：size=(m,n,k),则输出（m,n,k）个样本，缺省时输出１个值<br/>
+                            返回值：ndarray类型，其形状和参数size中描述一致<br/>
+                            <br/>
+                            np.random.randint(low, high=None, size=None, dtype='l')<br/>
+                            从一个均匀分布中随机采样，生成一个整数或N为整数数组<br/>
+                            取数范围：取[low, high)之间随机整数，否则取值[0,low)之间随机整数<br/>
+                            <br/>
+                        </code>
+                    </div>
+                    <h6>形状修改</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            ndarray.reshape(shape, order)<br/>
+                            返回一个具有相同数据域，但shape不一样的视图<br/>
+                            行、列不进行互换<br/>
+                            <br/>
+                            ndarray.resize(new_shape)<br/>
+                            修改数组本身的形状（需要保持元素个数前后相同）<br/>
+                            行、列不进行互换<br/>
+                            <br/>
+                            ndarray.T<br/>
+                            数组的转置，将数组的行、列进行互换<br/>
+                            <br/>
+                        </code>
+                    </div>
+                    <h6>类型修改</h6>
+                    <div class="text-sm-start bg-dark">
+                        <code>
+                            ndarray.astype(type)<br/>
+                            返回修改了类型之后的数组<br/>
+                            <br/>
+                            ndarray.tostring([order])或者ndarray.tobytes([order])<br/>
+                            构造包含数组中原始数据字节的python字节<br/>
+                        </code>
+                    </div>
+                    <h6>数组的去重</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            np.unique()
+                        </code>
+                    </div>
+                    <h4>ndarray运算</h4>
+                    <div class="text-sm-start bg-dark">
+                        <code>
+                            1. 逻辑判断<br/>
+                            2. 通用判断函数<br/>
+                            2.1 np.all() 判断数组是否全部满足条件，返回布尔值<br/>
+                            2.2 np.any() 判断数组是否存在满足条件的值，返回布尔值<br/>
+                            3. 三元运算符np.where()<br/>
+                            复合逻辑需要结合np.logical_and和np.logical_or使用<br/>
+                            案例：np.where(np.logical_and(temp>60, temp<90), 1, 0)<br/>
+                            4. 统计指标<br/>
+                            4.1 np.max()<br/>
+                            4.2 np.min()<br/>
+                            4.3 np.median()<br/>
+                            4.4 np.mean()<br/>
+                            4.5 np.std() 标准差<br/>
+                            4.6 np.var() <br/>
+                            4.7 np.argmax(axis=) 最大元素对应的下标<br/>
+                            4.8 np.argmin(axis=) 最小元素对应的下标<br/>
+                        </code>
+                    </div>
+                    <h6>数组运算</h6>
+                    <div class="bg-dark text-sm-start">
+                        <code>
+                            数组在进行矢量化运算时，要求数组的形状是相等的。当形状不相等的数组执行算术运算的时候，就会出现广播机制
+                            ，该机制会对数组进行扩展，使数组的shape属性值一样，这样，就可以进行矢量化运算了<br/>
+                            需要满足的条件：<br/>
+                            1. 数组的某一维度等长<br/>
+                            2. 其中一个数组的某一维度为１<br/>
+                            广播机制需要扩展维度小的数组，使得它与维度最大的数组的shape值相同
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            pandas
+            </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <h2>pandas的介绍</h2>
+                    <p class="bg-secondary text-sm-start">
+                        专门用于数据挖掘的开源python库<br/>
+                        以numpy为基础，借力numpy模块在计算方面性能高的优势<br/>
+                        基于matplotlib，能够简便的画图<br/>
+                        独特的数据结构
+                    </p>
+                    <h6>pandas的优势</h6>
+                    <p class="bg-secondary text-sm-start">
+                        增强图表可读性<br/>
+                        便捷的数据处理能力<br/>
+                        读取文件方便<br/>
+                        封装了matplotlib、numpy的画图和计算
+                    </p>
+                    <h6>pandas的数据结构</h6>
+                    <ul>
+                        <li>Series
+                            <ul>
+                                <li>是一个类似于一维数组的数据结构</li>
+                                <li>可以保存任何类型的数据，比如整数、字符串、浮点数等，主要由一组数据和与之相关的索引两部分构成</li>
+                                <li>
+                                    <div class="bg-dark">
+                                         <code>
+                                            # 导包<br/>
+                                            import pandas as pd<br/>
+                                            # 创建Series<br/>
+                                            pd.Series(data=None, index=None, dtype=None)<br/>
+                                            # 参数：<br/>
+                                            data: 传入的数据，可以是ndarray、list等<br/>
+                                            index：索引，必须是唯一的，且与数据的长度相等，如果没有传入索引参数，则默认会自动创建一个从０－N的整数索引<br/>
+                                            dtype：数据的类型
+                                        </code>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            matplotlib
+            </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -5,7 +5,7 @@ from .models import myusers
 
 def register_view(request):
     if request.method == 'GET':
-        return render(request, 'html/register.html')
+        return render(request, 'html/myusers/register.html')
     elif request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -25,14 +25,14 @@ def register_view(request):
                 return response
             else:
                 print('密码不一致')
-                return render(request, 'html/register.html')
+                return render(request, 'html/myusers/register.html')
         else:
             print('用户名重复')
-            return render(request, 'html/register.html')
+            return render(request, 'html/myusers/register.html')
 
 def login_view(request):
     if request.method == 'GET':
-        return render(request, 'html/login.html')
+        return render(request, 'html/myusers/login.html')
     elif request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -40,7 +40,7 @@ def login_view(request):
             old_user = myusers.objects.get(username=username)
         except Exception as e:
             print('还未注册')
-            return render(request, 'html/register.html')
+            return render(request, 'html/myusers/register.html')
         else:
             if password == old_user.password:
                 print('登录成功')
@@ -52,7 +52,7 @@ def login_view(request):
                 return response
             else:
                 print('密码错误')
-                return render(request, 'html/login.html')
+                return render(request, 'html/myusers/login.html')
 
 def logout_view(request):
     if request.method == 'GET':

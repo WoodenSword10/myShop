@@ -1,0 +1,59 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}FPGA{% endblock %}
+{% block middle %}
+    <section class="container-fluid">
+        <h2 class="text-sm-start text-center">FPGA介绍</h2>
+        <br/>
+        <ul>
+            <li><h4 class="text-sm-start text-center">FPGA简介</h4></li>
+            <p class="bg-info">
+                FPGA全称为field-programmable gate array，即现场可编程门阵列<br/>
+                FPGA是作为专门集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，
+                又克服了原有可编程器件门电路数有限的缺点。<br/>
+                简而言之，ＦＰＧＡ是一个可以通过编程来改变内部结构的芯片<br/>
+            </p>
+            <li><h4 class="text-sm-start text-center">FPGA和单片机的区别</h4></li>
+            <br/>
+            <p class="bg-info">
+                对于单片机而言，FPGA是一种微处理器，类似于电脑的CPU，一般是基于哈佛总线结构或冯诺依曼结构。<br/>
+                单片机用途广泛，多用于控制流水线上；<br/>
+                FPGA的结构是查找表，它的结构比较复杂，相对于的它可以实现的功能也很强大，
+                一般应用于通信接口设计、数字信号处理等比较高端的场合<br/>
+                FPGA还有一个特殊的应用场合，即ＡＳＩＣ的原型验证。
+            </p>
+            <li><h4 class="text-sm-start text-center">FPGA的优势和缺点</h4></li>
+            <ul>
+                <li>优势</li>
+                <p class="bg-info">相较于专职专用的ASIC,FPGA工具在开发难度上降低了许多，并且大大缩短了开发周期，
+                    而且由于FPGA是可重复编程的，其研发成本与风险也要比ASIC减少许多，更适合于复杂多变的数据中心等应用</p>
+                <li>缺点</li>
+                <p class="bg-info">易于开发程度远远不如单片机、CPU；在数字芯片设计领域，FPGA虽然相比ASIC具有更短的开发周期与开发难度，
+                但是其存在成本过高、性能较差并且在资源的利用率上远不及ASIC等问题，不能真正的替代ASIC。</p>
+            </ul>
+        </ul>
+        <div class="bg-black" style="height: 1rem"></div>
+        <h2>FPGA的基本结构</h2>
+        <p class="bg-info">
+            FPGA可编程的特性决定了其实现数字逻辑的结构不能像专用ASIC那样通过固定的逻辑门电路来完成，
+            而只能采用一种可以重复配置的结构来完成，而查找表（LUT）可以很好的满足这一要求，
+            目前主流的FPGA芯片仍是基于SRAM工艺的查找表结构。<br/>
+            在任意一款FPGA芯片说明书中可以查看到该器件具体的参数指标，其中包含可编程逻辑模块的数量、
+            固定功能逻辑模块（如乘法器）的数目存储器资源（嵌入式RAM）的大小。<br/>
+            当然仅有上述结构是构不成FPGA的，但在比较FPGA时，上述结构是重要的参考指标。<br/>
+            在最底层的可配置逻辑模块（如片上的逻辑单元）上，存在着基本的两种部件：触发器和查找表（LUT）,
+            而触发器和查找表的组合方式不同，是各个FPGA家族之间区别的重要依据，并且查找表本身的结构也可能各不相同
+            （有４输入或６输入或其他）
+        </p>
+        <ul>
+            <li>查找表</li>
+            <p class="bg-info">
+                查找表（LOOK-UP-TABLE）简称为LUT，其本质上就是一个RAM，目前FPGA内部中多使用４输入的LUT,
+                每一个LUT可以看成一个有４位地址线的RAM。当用户在EDA工具上通过原理图或硬件描述语言设计了一个逻辑电路以后，
+                FPGA开发软件会自动计算逻辑电路的所有可能结果，并把真值表事先写入RAM中。
+                这样，每输入一个信号进行了逻辑运算就等于输入一个地址进行查找表操作，通过地址找到对应的RAM中的结果，最后将其输出。
+            </p>
+            <>
+        </ul>
+    </section>
+{% endblock %}

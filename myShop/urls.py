@@ -24,4 +24,5 @@ urlpatterns = [
     path('microelect/', include('microelect.urls')),
     path('myML/', include('myML.urls')),
     path('mydjango/', include('mydjango.urls')),
+    path('FPGA/', include('FPGA.urls')),
 ]

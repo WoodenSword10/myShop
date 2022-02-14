@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'microelect',
     'myML',
     'mydjango',
+    'FPGA',
 ]
 
 MIDDLEWARE = [

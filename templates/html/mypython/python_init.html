@@ -1,0 +1,39 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}我的python技能{% endblock %}
+{% block middle %}
+<div class="card-group container-fluid">
+    <style>
+        img{
+            height: 250px;
+        }
+    </style>
+    <div class="card">
+        <img src={% static 'img/牛.jpg' %} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">python常用库文档</h5>
+            <p class="card-text">主要包括pandas、numpy、matplotlib、pyserial等常用库</p>
+            <a href="/mydjango/uulib/" class="btn btn-primary">Go somewhere</a>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img src={% static 'img/猪.jpg' %} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">django使用文档</h5>
+            <p class="card-text">python web开发工具</p>
+            <a href="/mydjango/uulib/" class="btn btn-primary">Go somewhere</a>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img src={% static 'img/兔.jpg' %} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">pyqt5文档</h5>
+            <p class="card-text">python UI设计工具</p>
+            <a href="/mydjango/uulib/" class="btn btn-primary">Go somewhere</a>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
