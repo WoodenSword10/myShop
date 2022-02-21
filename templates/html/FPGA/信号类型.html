@@ -1,0 +1,56 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}信号类型{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <h2>Verilog　HDL的信号类型</h2>
+        <p class="bg-info">
+            Verilog HDL的信号类型有很多种，主要包括两种数据类型：线网类型（net type）和寄存器类型（reg type）。在进行工程设计的过程中也只会使用到这两个类型的信号。
+        </p>
+        <h4>信号位宽</h4>
+        <ul class="bg-info">
+            <li>
+                定义信号类型的同时，必须定义好信号的位宽。
+                默认信号的位宽是１位，当信号的位宽为１时可不表述，如定义位宽为１的wire型信号，可直接用"wire a;"来表示。
+                但信号的位宽大于１位时，就一定要表示出来，如用"wire [7:0]"来表示该wire型信号的位宽为８位。
+            </li>
+            <li>
+                信号的位宽取决于要该信号要表示的最大值。该信号能表示的无符号数最大值是：２^n -1，其中n表示该信号的位宽。
+                例如，信号a的最大值为1000，那么信号a的位宽必须大于或等于10位。
+            </li>
+        </ul>
+        <h4>线网类型wire</h4>
+        <p class="bg-info">
+            线网类型用于对结构化器件之间的物理连线的建模，如器件的管脚，芯片内部器件如与门的输出等。
+            由于线网类型代表的是物理连接线，因此其不存储逻辑值，必须由器件驱动。
+            通常用assign进行赋值，如assign A = B^C。<br/>
+            wire类型定义语法如下：
+        </p>
+        <ul class="bg-info">
+            <li>wire [msb:lsb] wire1, wire2, ...,wireN:</li>
+            <li>msb和lsb定义了范围，表示了位宽。例如[7:0]是８位位宽，也就是可以表示成8`b0至8`b1111_1111;</li>
+            <li>msb和lsb必须为常数值；</li>
+            <li>如果没有定义范围，缺省值为１位；</li>
+            <li>没有定义信号数据类型时，缺省为wire类型</li>
+            <li>注意数组类型按照降序方式，如[7:0],不要写成[0:7]</li>
+        </ul>
+        <h4>寄存器类型reg</h4>
+        <p class="bg-info">
+            reg是最常用的寄存器类型，寄存器类型通常用于对存储单元的描述，如D型触发器、ROM等。
+            寄存器类型信号的特点是在某种触发机制下分配了一个值，在下一触发机制到来之前保留原值，
+            但必须注意的是：reg类型的变量不一定是存储单元，如在always语句中进行描述的必须是用reg类型的变量。<br/>
+            reg类型定义语法如下：
+        </p>
+        <ul class="bg-info">
+            <li>reg [msb:lsb] reg1, reg2, ……,regN;<br/></li>
+            <li>msb和lsb定义了范围，表示了位宽。</li>
+            <li>msb和lsb必须为常数值</li>
+            <li>如果没有定义范围，缺省值为１位</li>
+            <li>没有定义信号数据类型时，缺省为wire类型，不是reg型。</li>
+            <li>对数组类型按照降序方式，如[7:0];不要写成[0:7]</li>
+        </ul>
+        <h4>wire和reg的区别</h4>
+        <p class="bg-info">reg型信号并不一定生成寄存器。针对什么时候使用wire类型，什么时候用reg类型这一问题，解决方法为：在本模块中使用always设计的信号都定义为reg型，其他信号都定义为wire型。</p>
+    </section>
+
+{% endblock %}

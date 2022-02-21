@@ -1,0 +1,145 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}综合和仿真{% endblock %}
+{% block middle %}
+    <section class="p-xl-5 container-fluid">
+        <ul>
+            <li>综合</li>
+            <br/>
+            <p class="bg-info">
+                在Verilog描述出硬件功能后需要使用综合器对Verilog代码进行解释并将代码转化为实际的电路来标书，
+                最终产生实际的电路，也称为网表。这种将Verilog代码转成网表的工具就是综合器。<br/>
+                QUARTUS、ISE和VIVADO等FPGA开发工具都是综合器，而在集成电路设计领域常用的综合器就是DC
+            </p>
+            <li>仿真</li>
+            <br/>
+            <p class="bg-info">
+                在FPGA设计的过程中，不可避免会出现各种BUG，如果在编写好代总合成电路、烧写到FPGA后才发现问题，此时再去定位问题就会非常地困难，而在综合前，设计师可以在电脑里通过仿真软件对代码进行仿真测试，、
+                检测出BUG病将其解决，最后再将程序烧写进FPGA。一般情况下可以认为没有经过仿真验证的代码，一定是存在BUG的。<br/>
+                为了模拟真实的情况，需要编写测试文件，该文件也是用Verilog编写的，其描述了仿真对象的输入激励情况。该激励力求模拟最真实的情况，产生最接近的激励信号，将该信号的波形输入给仿真对象，
+                查看仿真对象的输出是否与预期一致。需要注意的是：在仿真过程中没有将代码转换成电路，仿真器只是对代码进行仿真验证。至于该代码是否可转成电路，仿真器并不关心。<br/>
+                Verilog的代码不仅可以描述电路，还可以用于测试。事实上，Verilog定义的语法非常之多，但绝大多数都是为了仿真测试来使用的，只有少部分才是用于电路设计。Verilog中用于设计的语法是学习的难重点，
+                掌握好设计的语法并熟练应用于各种复杂的项目是技能的核心，而其他测试用的语法，在需要时查找和参考就足够了。
+            </p>
+            <li>可综合设计</li>
+            <br/>
+            <p class="bg-info">
+                Verilog硬件描述语言有类似于高级语言的完整语法结构和系统，这些语法结构的应用给设计描述带来了很多方便。但是，Verilog是描述硬件电路的，其建立在硬件电路的基础之上。
+                而有些语法结构只是以仿真测试为目的，是不能与实际硬件电路对应起来的，也就是说在使用这些语法时，将一个语言描述的程序映射成实际硬件电路中的结构是不能实现的，也称为不可综合语法。<br/>
+                综合要做的是：编译rtl代码、从库里选择用到的门器件，把这些器件按照“逻辑”搭建成”门“电路。<br/>
+                不可综合，是指找不到对应的”门“器件来实现相应的代码。<br/>
+            </p>
+            <table class="table table-dark table-bordered mx-auto text-sm-center">
+                <thead>
+                    <tr>
+                        <th scope="col">代码</th>
+                        <th scope="col">要求</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>initial</td>
+                        <td>严禁在设计中使用，只能在测试文件中使用</td>
+                    </tr>
+                    <tr>
+                        <td>task/function</td>
+                        <td>不推荐在设计中使用，在测试文件中使可用</td>
+                    </tr>
+                    <tr>
+                        <td>for</td>
+                        <td>在设计中、测试文件中均可使用。但在设计中多数会将其用错，所以建议在初期设计时不使用，熟练后按规范使用</td>
+                    </tr>
+                    <tr>
+                        <td>while/repeat/forever</td>
+                        <td>严禁在设计中使用，只能在测试文件中使用</td>
+                    </tr>
+                    <tr>
+                        <td>integer</td>
+                        <td>不推荐在设计中使用</td>
+                    </tr>
+                    <tr>
+                        <td>三态门</td>
+                        <td>内部模块不能有三态接口，三态门只有顶层文件才使用。三态门目的是为了节省管脚，FPGA内部完成没有必要使用</td>
+                    </tr>
+                    <tr>
+                        <td>casex/casez</td>
+                        <td>设计代码内部不能有X态和Z态，因此casex/casez设计时不能使用</td>
+                    </tr>
+                    <tr>
+                        <td>force/wait/fork</td>
+                        <td>严禁在设计中使用，只能在测试文件中使用</td>
+                    </tr>
+                    <tr>
+                        <td>#n</td>
+                        <td>严禁在设计中使用，只能在测试文件中使用</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="bg-black" style="height: 1rem;"></div>
+            <div class="bg-black" style="height: 1rem;"></div>
+            <table class="table table-dark table-bordered mx-auto caption-top text-sm-center">
+                <caption>推荐使用的代码及其说明</caption>
+                <tbody>
+                    <tr>
+                        <td>reg/wire</td>
+                        <td>设计中所有的信号类型定义，只有reg/wire两种</td>
+                    </tr>
+                    <tr>
+                        <td>parameter</td>
+                        <td>设计代码中所有的位宽、长度、状态机命名等，建议都用参数表示，阅读方便并且修改容易</td>
+                    </tr>
+                    <tr>
+                        <td>assign/always</td>
+                        <td>
+                            程序块主要部分：至简设计对always使用严格规范<br/>
+                            组合逻辑格式为：<br/>
+                            <code>
+                                always@(*) begin<br/>
+                                代码语句；<br/>
+                                end<br/>
+                            </code>
+                            或者使用assign<br/>
+                            时序逻辑格式为：<br/>
+                            <code>
+                                always@(posedge clk or negedgerst_n) begin<br/>
+                                if (rst_n==1`b0) begin<br/>
+                                代码语句;<br/>
+                                end<br/>
+                                else begin<br/>
+                                代码语句；<br/>
+                                end<br/>
+                                end<br/>
+                            </code>
+                            时序逻辑中，敏感列表一定是clk的上升沿和复位的下降沿、最开始必须判断复位。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>if else和case</td>
+                        <td>always里面的语句，使用if-else和case两种方法用作选择判断，可以完成全部设计</td>
+                    </tr>
+                    <tr>
+                        <td>算术运算符（＋、－、×、/、％）</td>
+                        <td>可以直接综合出相对应的电路。但除法和求余运算的电路面积一般比较大，不建议直接使用除法和求余</td>
+                    </tr>
+                    <tr>
+                        <td>赋值运算符(=、<=)</td>
+                        <td>时序逻辑用"<="，组合逻辑用"="；其他情况不存在</td>
+                    </tr>
+                    <tr>
+                        <td>关系运算符（==、!=、>、<、>=、<=）</td>
+                        <td rowspan="4">详见组合逻辑一节</td>
+                    </tr>
+                    <tr>
+                        <td>逻辑运算符（&&、||、！）</td>
+                    </tr>
+                    <tr>
+                        <td>位运算符（～、｜、^、＆）</td>
+                    </tr>
+                    <tr>
+                        <td>拼接运算符（{}）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </section>
+{% endblock %}
