@@ -21,3 +21,21 @@ def FPGA_MBJG_view(request):
 
 def FPGA_XHLX_view(request):
     return render(request, 'html/FPGA/信号类型.html')
+
+def FPGA_CXYJ_view(request):
+    return render(request, 'html/FPGA/程序语句.html')
+
+def FPGA_SZJZ_view(request):
+    return render(request, 'html/FPGA/数字进制.html')
+
+def FPGE_SSYSF_view(request):
+    return render(request, 'html/FPGA/算术运算符.html')
+
+def FPGA_LJYSF_view(request):
+    return render(request, 'html/FPGA/逻辑运算符.html')
+
+def FPGA_GXYSF_view(request):
+    return render(request, 'html/FPGA/关系运算符.html')
+
+def FPGA_YWYSF_view(request):
+    return render(request, 'html/FPGA/移位运算符.html')

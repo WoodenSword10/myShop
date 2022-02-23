@@ -1,0 +1,593 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}逻辑运算符{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <h1 class="text-sm-center">逻辑运算符</h1>
+        <table class="table table-bordered table-striped mx-auto table-responsive-md">
+            <thead>
+                <tr>
+                    <th>类型</th>
+                    <th>情况</th>
+                    <th>功能</th>
+                    <th>Verilog代码</th>
+                    <th>电路示意图</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">与门</td>
+                    <td>1位逻辑与（符号：＆＆）</td>
+                    <td>A和B都为１，C为１；否则C为0。</td>
+                    <td>
+                        <code>
+                            reg A,B;
+                            always @(*)begin<br/>
+                            &nbsp;&nbsp;C=A && B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img class="img-fluid w-auto" src={% static 'img/１位逻辑与.jpg' %}></td>
+                    <td>
+                        注意：FPGA支持多输入的与门，例如四输入与门，输入可为ABCD，输出为E，当ABCD同时为１时，E为１
+                    </td>
+                </tr>
+                <tr>
+                    <td>多位逻辑与（符号：＆＆）</td>
+                    <td>A或B都不为0时，C为１否则为0</td>
+                    <td>
+                        <code>
+                            reg[2:0] A、B、C<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A && B;
+                            end
+                        </code>
+                    </td>
+                    <td><img class="img-fluid w-auto" src={% static 'img/多位逻辑与.jpg' %}></td>
+                    <td>
+                        多位信号之间的逻辑与，很容易引起歧义，设计最好不要用多位数的逻辑与、如果要实现上面功能，建议代码改为：<br/>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=(A!=0)&&(B!=0);<br/>
+                            end
+                        </code>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">或门</td>
+                    <td>１位逻辑或（符号：||）</td>
+                    <td>A和B其中一个为１，C为１；否则C为0。</td>
+                    <td>
+                        <code>
+                            reg A,B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A||B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img class="w-auto img-fluid" src={% static 'img/１位逻辑或.jpg' %}></td>
+                    <td>注意：FPGA支持多输入的或门，如四输入或门，输入可为A、B、C、D，输出为E，当ABCD同时为0时，E为0，否则为1。</td>
+                </tr>
+                <tr>
+                    <td>多位逻辑或</td>
+                    <td>A和B其中一个非0，C为１；否则C为0</td>
+                    <td>
+                        <code>
+                            reg[2:0] A、B、C<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C = A||B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img class="w-auto img-fluid" src={% static 'img/多位逻辑或.jpg' %}></td>
+                    <td>
+                        多位信号之间的逻辑或，很容易引起歧义。最好不要用多位的逻辑或。如果要实现相同功能，建议改为如下：<br/>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=(A!=0)||(B!=0);<br/>
+                            end
+                        </code>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="bg-info">在Verilog　HDL语言中存在３种逻辑运算符，它们分别是：</p>
+        <ul class="bg-info">
+            <li>&&:逻辑与；</li>
+            <li>||:逻辑或；</li>
+            <li>!:逻辑非。</li>
+        </ul>
+        <p class="bg-info">
+            逻辑非：“!”是单目运算符，只要求有一个操作数，如!(a>b).
+        </p>
+        <code>
+            if(!a)begin<br/>
+            {}<br/>
+            end
+        </code>
+        <p class="bg-info">
+            对操作数a需要先判断非a是否为真，为真就执行｛｝内的操作，为假的话就结束操作。<br/>
+            下表为逻辑运算的真值表，其表示当a和b的值为不同的组合时各种逻辑运算所得到的值。
+        </p>
+        <table class="table table-responsive-md table-bordered table-striped mx-auto">
+            <thead>
+                <th>a</th>
+                <th>b</th>
+                <th>!a</th>
+                <th>!b</th>
+                <th>a&&b</th>
+                <th>a||b</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>真</td>
+                    <td>真</td>
+                    <td>假</td>
+                    <td>假</td>
+                    <td>真</td>
+                    <td>真</td>
+                </tr>
+                <tr>
+                    <td>真</td>
+                    <td>假</td>
+                    <td>假</td>
+                    <td>真</td>
+                    <td>假</td>
+                    <td>真</td>
+                </tr>
+                <tr>
+                    <td>假</td>
+                    <td>真</td>
+                    <td>真</td>
+                    <td>假</td>
+                    <td>假</td>
+                    <td>真</td>
+                </tr>
+                <tr>
+                    <td>假</td>
+                    <td>假</td>
+                    <td>真</td>
+                    <td>真</td>
+                    <td>假</td>
+                    <td>假</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="bg-info">
+            逻辑运算符最后的结果只有逻辑真或逻辑假两种，即１或0。<br/>
+            一般情况下用逻辑运算符作判断条件时逻辑和操作只能是两个1位宽的数，只有两个表达式同时为真才为真，有一个为假则为假<br/>
+            如果操作数是多位的，则可以将操作数看做整体，若操作数中每一位都是0值则为逻辑0值；若操作数中有1则为逻辑1值。
+        </p>
+        <code>
+            assign a = 4`b0111 && 4`b1000;<br/>
+            assign b = 4`b0111 || 4`b1000;<br/>
+            assign c = !4`b0111;<br/>
+        </code>
+        <p class="bg-info">由于4`b1000和4`b0111都不是0，不为0则被认为是逻辑真，所以上面的代码等效于如下代码。</p>
+        <code>
+            assign a = 1`b1 && 1`b1;<br/>
+            assign b = 1`b1 || 1`b1;<br/>
+            assign c = !(1`b1);
+        </code>
+        <p class="bg-info">也就是结果为a为逻辑真，b为逻辑真，c为逻辑假。</p>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>经验总结</h2>
+        <br/>
+        <ul class="bg-info">
+             <li>
+                逻辑运算符中“&&”和“||”的优先级低于算术运算符；“!”的优先级高于双目逻辑运算符。
+            </li>
+            <code>
+                (a < b)&&(c > d)可写成 a < b && c > d;<br/>
+                (a == b) || (c == d)可写成a == b || c == d;<br/>
+                (!a)||(a > b)可写成：!a || a > b.
+            </code>
+            <li>
+               逻辑运算符两边对应的是１比特信号
+            </li>
+            <code>
+                wire[3:0] a,b;<br/>
+                assign d = a && b;
+            </code>
+            <p>
+                注意上文代码，其中a和b都是多比特信号，表示两个多比特信号进行逻辑与。<br/>
+                这句代码的正确理解为：当a不等于0并且b不等于0时，d的值不为１。<br/>
+                但存在理解问题，建议改成：
+            </p>
+            <code>
+                wire[3:0] a,b;<br/>
+                assign d = (a!=0) && (b!=0);
+            </code>
+            <li>多用括号区分优先级</li>
+            <li>少用逻辑非</li>
+        </ul>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>按位逻辑运算符</h2>
+        <br/>
+        <table class="table table-bordered table-striped table-responsive-md mx-auto">
+            <thead>
+                <th>类型</th>
+                <th>情况</th>
+                <th>功能</th>
+                <th>Verilog代码</th>
+                <th>备注</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="4">反相器</td>
+                    <td>1位反相器（符号：～）</td>
+                    <td>将值取反</td>
+                    <td>
+                        <code>
+                            reg A,B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;B=~A;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>多位反相器（符号：～）</td>
+                    <td>将值取反</td>
+                    <td>
+                        <code>
+                            reg[1:0] A, B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;B=~A;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td>
+                        如果A和B都是n位，实际电路就是有n个反相器。画电路图时可画一个来简化。
+                    </td>
+                </tr>
+                <tr>
+                    <td>按位与（符号：＆）常用１</td>
+                    <td>A和B对应的比特分别相与</td>
+                    <td>
+                        <code>
+                            reg[2:0] A, B, C;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C= A & B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>按位与（符号：～）常用２</td>
+                    <td>A的各位之间相与。</td>
+                    <td>
+                        <code>
+                            reg[2:0] A;
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C = & A;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">或门</td>
+                    <td>1位逻辑或（符号：||）</td>
+                    <td>A和B其中1个为１，C为1；否则C为0。</td>
+                    <td>
+                        <code>
+                            reg A, B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A||B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td>
+                        注意：FPGA支持多输入的与门，例如四输入与门，输入可为A、B、C、D，输出为E，当A、B、C、D同时为１时，E为１。
+                    </td>
+                </tr>
+                <tr>
+                    <td>按位或（符号：|）常用１</td>
+                    <td>A和B对应的比特相或</td>
+                    <td>
+                        <code>
+                            reg[2:0] A,B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A|B<br/>
+                            end
+                        </code>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>按位或（符号：|）常用２</td>
+                    <td>A的各位相或</td>
+                    <td>
+                        <code>
+                            reg[2:0] A;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=|A;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="bg-info">
+            注：~^、^~(二元异或非即同或)：（相当于同或门运算）。<br/>
+            在Verilog　HDL语言中有下面几种按位运算符：
+        </p>
+        <ul>
+            <li>~(一元非)：（相当于非门运算）</li>
+            <li>&(二元与)：（相当于与门运算）</li>
+            <li>|(二元或)：（相当于或门运算）</li>
+            <li>^(二元异或)：（相当于异或门运算）</li>
+        </ul>
+        <p>这些操作符在输入操作数的对应位上按位操作，并产生向量结果。</p>
+        <table class="table table-responsive-md table-striped table-bordered mx-auto caption-top">
+            <caption>＆真值表</caption>
+            <thead>
+                <th>&与</th>
+                <th>0</th>
+                <th>1</th>
+                <th>x</th>
+                <th>z</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>0</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>z</td>
+                    <td>0</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-responsive-md table-striped table-bordered mx-auto caption-top">
+            <caption>|真值表</caption>
+            <thead>
+                <th>|或</th>
+                <th>0</th>
+                <th>1</th>
+                <th>x</th>
+                <th>z</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>z</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>z</td>
+                    <td>x</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-responsive-md table-striped table-bordered mx-auto caption-top">
+            <caption>^真值表</caption>
+            <thead>
+                <th>^异或</th>
+                <th>0</th>
+                <th>1</th>
+                <th>x</th>
+                <th>z</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>z</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-responsive-md table-striped table-bordered mx-auto caption-top">
+            <caption>^~真值表</caption>
+            <thead>
+                <th>^~异或非</th>
+                <th>0</th>
+                <th>1</th>
+                <th>x</th>
+                <th>z</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+                <tr>
+                    <td>z</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-responsive-md table-striped table-bordered mx-auto caption-top">
+            <caption>~真值表</caption>
+            <thead>
+                <th>&与</th>
+                <th>0</th>
+                <th>1</th>
+                <th>x</th>
+                <th>z</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>x</td>
+                    <td>x</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <ul class="bg-info">
+            <li>单目按位与</li>
+            <p>
+                表示对信号进行每位之间相与的操作。<br/>
+                reg[3:0] A,C;<br/>
+                assign C = & A;<br/>
+                上述代码等价于C=A[3]&A[2]&A[1]&A[0];<br/>
+                如果A=4`B0110，C的结果为0。
+            </p>
+            <li>单目按位或</li>
+            <p>
+                表示对信号进行每位之间相或的操作。<br/>
+                reg[3:0] A, C;<br/>
+                assign C = |A;
+                上述代码等价于C = A[3]|A[2]|A[1]|A[0];<br/>
+                如果A=4`b0110，C的结果为１。
+            </p>
+            <li>单目按位非</li>
+            <p>
+                表示对信号进行每位取反的操作。<br/>
+                reg[3:0] A, C;<br/>
+                assign C ~= A;<br/>
+                上述代码等价于C[3] = ~A[3], C[2] = ~A[2], C[1] = ~A[1], C[0] = ~A[0]。<br/>
+                如果A=4`B0110，C的结果为4`b1001。
+            </p>
+            <li>双目按位与</li>
+            <p>
+                表示的是对这个两个信号进行对应位相与的操作。<br/>
+                reg[3:0] A,B,C;<br/>
+                assign C = A & B;<br/>
+                上述代码等价于C[0] = A[0] & B[0], C[1] = A[1] & B[1], C[2] = A[2] & B[2], C[3] = A[3] & B[3]。<br/>
+                如果A=4`B0110，B=4`b1010，C的结果为4`b0010<br/>
+                如果操作数长度不相等，长度较小的操作数在最左侧添0补位。例如:<br/>
+                reg[1:0] A;<br/>
+                reg[2:0] B;<br/>
+                reg[3,0] C;<br/>
+                assign C = A & B<br/>
+                上述代码等价于：C[0] = A[0] & B[0], C[1] = A[1] & B[1], C[2] = 0 & B[2], C[3] = 0 & 0。
+            </p>
+            <li>双目按位或</li>
+            <p>
+                表示的是对这个两个信号进行对应位相或的操作。<br/>
+                reg[3:0] A,B,C;<br/>
+                assign C = A | B;<br/>
+                上述代码等价于C[0] = A[0] | B[0], C[1] = A[1] | B[1], C[2] = A[2] | B[2], C[3] = A[3] | B[3]。<br/>
+                如果A=4`B0110，B=4`b1010，C的结果为4`b1110<br/>
+                如果操作数长度不相等，长度较小的操作数在最左侧添0补位。例如:<br/>
+                reg[1:0] A;<br/>
+                reg[2:0] B;<br/>
+                reg[3,0] C;<br/>
+                assign C = A | B<br/>
+                上述代码等价于：C[0] = A[0] | B[0], C[1] = A[1] | B[1], C[2] = 0 | B[2], C[3] = 0 | 0。
+            </p>
+            <li>双目按位异或</li>
+            <p>
+                表示的是对这个两个信号进行对应位相异或的操作。异或是值0^0=0; 1^1=0; 1^0=１，即相同为0，不同为１。<br/>
+                reg[3:0] A,B,C;<br/>
+                assign C = A ^ B;<br/>
+                上述代码等价于C[0] = A[0] ^ B[0], C[1] = A[1] ^ B[1], C[2] = A[2] ^ B[2], C[3] = A[3] ^ B[3]。<br/>
+                如果A=4`B0110，B=4`b1010，C的结果为4`b1100<br/>
+                如果操作数长度不相等，长度较小的操作数在最左侧添0补位。例如:<br/>
+                reg[1:0] A;<br/>
+                reg[2:0] B;<br/>
+                reg[3,0] C;<br/>
+                assign C = A ^ B<br/>
+                上述代码等价于：C[0] = A[0] ^ B[0], C[1] = A[1] ^ B[1], C[2] = 0 ^ B[2], C[3] = 0 ^ 0。
+            </p>
+        </ul>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>经验总结</h2>
+        <ul>
+            <li>逻辑运算符和位运算符的区别</li>
+            <p>
+                逻辑运算符包括&&、||、!，位运算符包括&、|、~。<br/>
+                区别在于：逻辑运算符的运算只有逻辑真和逻辑假两种结果，即1或0；而位运算符用于两个多位宽数据操作，两数按位进行相与、相或或相非。
+            </p>
+            <code>
+                assign a = 4`b0111 && 4`b1000;   ---> a = 1`b1;<br/>
+                assign b = 4`b0111 || 4`b1000;   ---> b = 1`b1;<br/>
+                assign c = !4`b0111;             ---> c = 1`b0;<br/>
+                assign d = 4`b0111 & 4`b1000;    ---> d = 4`b0000;<br/>
+                assign e = 4`b0111 | 4`b1000;    ---> e = 4`b1111;<br/>
+                assign f = ~4`b0111;             ---> f = 4`b1000;
+            </code>
+        </ul>
+    </section>
+{% endblock %}

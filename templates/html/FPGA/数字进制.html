@@ -1,0 +1,246 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}数字进制{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <h2>数字表示方式</h2>
+        <br/>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;在Verilog中的数字表示方式，最常用的格式是：《位宽》｀《基数》《数值》，如4`b1011<br/>
+        </p>
+        <ul>
+            <li>位宽：描述常量所含位数的十进制整数，是可选项。通俗理解就是4根线。如果没有这一项可以通过常量的值进行推断。</li>
+            <li>基数：表示数值是多少进制，可以是b、B、d、D、o、O、h或者H，分别表示二进制、十进制、八进制和十六进制。如果没有此项，则缺省默认十进制数。</li>
+            <li>
+                数值：是由基数决定的表示常量真实值的一串ASCII码。
+                <ul>
+                    <li>如果基数定义为b或者B，数值可以是0、1、x、X、z、Z</li>
+                    <li>如果基数定义为o或者O，数值可以是2、3、4、5、6、7</li>
+                    <li>如果基数定义为h或者H，数值可以是8、9、a、b、c、d、e、f、A、B、C、D、E、F</li>
+                    <li>对于基数为d或者D，数值可以是任意的十进制数：0-9，但不可以是x或者z。Ｓ</li>
+                </ul>
+            </li>
+        </ul>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;例如，4`b12是错误的，因为b表示二进制，数值只能是0、1、x或者z，不包含2。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;32`h12等同于32`h00000012，即数值未写完整时，高位补0。
+        </p>
+        <div class="bg-black" style="height: 1rem"></div>
+        <h2>二进制基础</h2>
+        <br/>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;在数字电路中如果芯片A给芯片B传递数据，例如传递0或者1信息，可以将芯片A和芯片B通过一个管脚进行相连，然后由芯片A控制该管脚输出为高电平或者低电平，
+            通过高低电平来表示0和1。芯片B检测到该管脚为低电平时，表示收到0，芯片B检测到该管脚为高电平时，表示收到1。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;当然也可以用低电平表示收到１，用高电平表示收到0。只要芯片A和芯片B事先协定，芯片A要发数字1时会将该管脚置为低电平。
+            芯片B检测到该管脚为低电平，表示收到了数字1，通信完成。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;一个管脚拥有高低电平两种状态，可以分别表示数字0和1的两种情况。如果芯片A要发数字0、1、2、3给芯片B又要如何操作呢？<br/>
+            可以让芯片A和芯片B连接两根管脚，即两条线：a和b。
+        </p>
+        <ul>
+            <li>当两条线都为低电平时，表示发送数字0；</li>
+            <li>当a为高电平b为低电平时，表示发送数字1；</li>
+            <li>当a为低电平b为高电平时，表示发送数字2；</li>
+            <li>当两条线都是高电平时，表示发送数字3。</li>
+        </ul>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;同样，芯片A要发送数据4、5、6、7给芯片B时，只要再添加一条线就可以了。三根线共有８中状态，可以表示8个数字。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;综上所述，线的不同电平状态可以表示不同的含义，有多少种状态就可以表示多少个数字。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;若要表示正负，即可单用一根线来表示符号，如低电平表示正数，高电平表示负数。
+        </p>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;用线a和线b表示数值，以3`b111为例，其可以解释为十进制数７，也可以解释为有符号数原码“-3”，也可以解释为有符号数补码“-1”,
+            如何解释取决于工程师对二进制数的定义。只要该定义不影响到电路之间的通信就不会发生问题。
+            因此数字中的“0”和“1”不仅可以表示字面上的数值含义，也可以表示其他意义，如正负符号等。同样的道理，
+            在数字电路中二进制数是八进制、十进制、十六进制、有符号数、无符号数、小数等其他数制的根本。
+        </p>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;小数的表示：可直接用几根线自行来定义，只要能正常通信，那就没有问题。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;例如用三根线自行定义二进制所表示的小数值：
+        </p>
+        <table class="table table-bordered table-dark mx-auto text-sm-center">
+            <thead>
+                <tr>
+                    <th>二进制值</th>
+                    <th>定义</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3`b000</td>
+                    <td>0.1</td>
+                </tr>
+                <tr>
+                    <td>3`b001</td>
+                    <td>0.5</td>
+                </tr>
+                <tr>
+                    <td>3`b010</td>
+                    <td>0.75</td>
+                </tr>
+                <tr>
+                    <td>3`b011</td>
+                    <td>0.2</td>
+                </tr>
+                <tr>
+                    <td>3`b100</td>
+                    <td>0.25</td>
+                </tr>
+                <tr>
+                    <td>3`b101</td>
+                    <td>0.3</td>
+                </tr>
+                <tr>
+                    <td>3`b110</td>
+                    <td>0.8</td>
+                </tr>
+                <tr>
+                    <td>3`b111</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;如果想表示更多数字增加线的数量就可以了。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;利用上面的定义，要实现“0.5+0.25”就很容易了，其实就是3`b001和3`b100”相加“，期望得到3`b010。
+            但是在该表中直接使用3`b001+3`b100，结果为"101"，这不是想要的结果，此时可以将代码写为：
+        </p>
+        <div class="bg-secondary">
+            <code>
+                if (a==3`b001 && b==3`b100)<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;c<=3`b010;
+            </code>
+        </div>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;当然这只是其中一种写法，只要能实现对应的功能且结果正确，任意写法都可以。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;此处可能存在疑虑，0.1+0.8应该为0.9，但上面的表格并没有0.9的表示。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;这其实是设计者定义的这个表格有缺陷，或者设计者认为不会出现这一情况。此处要表达的是：只要定义好对应的二进制数，很多功能都是很容易设计的。
+        </p>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;当然，实际的工程中通常会遵守约定俗成的做法，没必要另辟蹊径。例如，下表是常用的定点小数的定义：
+        </p>
+        <table class="table table-bordered table-dark mx-auto text-sm-center">
+            <thead>
+                <tr>
+                    <th>二进制值</th>
+                    <th>定义</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3`b000</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+                    <td>3`b001</td>
+                    <td>0.125</td>
+                </tr>
+                <tr>
+                    <td>3`b010</td>
+                    <td>0.25</td>
+                </tr>
+                <tr>
+                    <td>3`b011</td>
+                    <td>0.3725</td>
+                </tr>
+                <tr>
+                    <td>3`b100</td>
+                    <td>0.5</td>
+                </tr>
+                <tr>
+                    <td>3`b101</td>
+                    <td>0.625</td>
+                </tr>
+                <tr>
+                    <td>3`b110</td>
+                    <td>0.75</td>
+                </tr>
+                <tr>
+                    <td>3`b111</td>
+                    <td>0.8725</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bg-black" style="height: 1rem"></div>
+        <h2>不定态</h2>
+        <br/>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;数字电路只有高电平和低电平，分别表示1和0。但代码中经常能看到x和z，如1`bx、1`bz。这个x和z并没有实际的电平来对应两者。
+            x和z更多的是用来表示设计者的意图或者用于仿真目的，旨在告诉仿真器和综合器如何解释这段代码。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;X态，称之为不定态，其常用于判断条件，从而告诉综合工具设计者并不关心它的电平是多少，是0还是1都可以。
+        </p>
+        <div class="bg-secondary">
+            <code>
+                always @(posedge clk or negedge rst_n)begin<br/>
+                &nbsp;&nbsp;if (rst_n==1`b0)begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;dout<=0;<br/>
+                &nbsp;&nbsp;end<br/>
+                &nbsp;&nbsp;else if (din==4`b10x0)begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;dout<=1;<br/>
+                &nbsp;&nbsp;end<br/>
+                end<br/>
+            </code>
+        </div>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;例子中可以看出判断条件是din==4`d10x0，该条件等价于din==4`b1000||din==4`b1010，其中”||“是”或“符号。
+        </p>
+        <div class="bg-secondary">
+            <code>
+                always @(posedge clk or negedge rst_n)begin<br/>
+                &nbsp;&nbsp;if(rst_n==1`b0)begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;dout<=0<br/>
+                &nbsp;&nbsp;end<br/>
+                &nbsp;&nbsp;else if(din==4`d1000||din==4`d1010)begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;dout<=1<br/>
+                &nbsp;&nbsp;end<br/>
+                end<br/>
+            </code>
+        </div>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;然而在设计中直接写成din==4`b1000||din==4`b1010要好于写din==4`b10x0，因为这样的写法更加直接和简单明了。<br/>
+            在仿真的过程中有些信号产生了不定态，那么设计者就要认真分析这个不定态是不是合理的。如果真的不关心它是0还是1，那么可以不解决。
+            但建议所有信号都不应该处于不定态，写清楚其是0还是1，不要给设计添加”思考“的麻烦。
+        </p>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>高阻态</h2>
+        <br/>
+        <p class="bg-info">
+            &nbsp;&nbsp;Z态，一般称为高阻态，表示设计者不驱动这个信号（既不给0也不给1），通常用于三态门接口当中。<br/>
+        </p>
+        <img class="rounded mx-auto d-block" src={% static 'img/FPGA高阻态.jpg' %}>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;上图就是三态总线的应用案例，图中的连接总线对于CPU和FPGA来说既为输入又为输出，是双向接口。
+            一般的硬件电路中会将该线接上一个上拉电阻（弱上拉）或下拉电阻（弱下拉）。<br/>
+        </p>
+        <ul>
+            <li>当CPU和FPGA都不驱动该总线时，A点保持为高电平。</li>
+            <li>当FPGA不驱动该总线，CPU驱动该总线时，A点的值就由CPU决定。</li>
+            <li>当CPU不驱动该总线，FPGA驱动该总线时，A点的值就由FPGA决定。</li>
+            <li>但FPGA和CPU不能同时驱动该总线，否则A的电平就不确定了，通常FPGA和CPU何时驱动总线是按事先协商的协议进行工作。</li>
+        </ul>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;I2C总线SDA就是一个三态信号。I2C协议已规定好上面的时间中，哪段时间是由主设备驱动，哪段时间是由从设备驱动，
+            双方都要遵守协议，不能存在同时驱动的情况。那么FPGA在设计中如何做到”不驱动“这一行为呢？这是因为FPGA内部有三态门。
+        </p>
+        <img class="rounded mx-auto d-block" alt="三态门" src={% static 'img/FPGA三态门.jpg' %}>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;三态门是一个硬件，上图是它的典型结构，三态门有四个接口，如上图所的写使能wr_en、写数据wr_data、读数据rd_data以及与外部器件相连的三态信号data。
+            需要注意的是写使能信号，当该信号有效时三态门会将wr_data的值赋给data，此时data的值由wr_data决定，当wr_data为0时data值为0；
+            当wr_data为1时data值为1。而当写使能信号无效时，则不论wr_data值是多少都不会对外面的data值有影响，也就是不驱动。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;在Verilog中以上功能是通过如下代码实现的：
+        </p>
+        <div class="bg-secondary">
+            <code>
+                assign data = (wr_en==1)?wr_data:1`bz;<br/>
+                assign rd_data = data;
+            </code>
+        </div>
+        <p class="bg-info">
+            &nbsp;&nbsp;&nbsp;&nbsp;当综合器看到这两行代码就知道要综合成三态门了，高阻z的作用正在于此。此外可以注意到硬件上用三态门是为了减少管脚，
+            而在FPGA内部没有必要减少连线，所有使用三态信号是没有意义的。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;因此建议在进行设计时不要在FPGA内部使用高阻态"z"，因为没有必要给自己添加”思考”的麻烦。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;当然如果在设计中使用高阻态也不会报错，也可以实现功能。<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;总之，高阻态“z”是表示“不驱动总线”这个行为，实际上数字电路就是高电平或者低电平，不存在其他电平的情况。
+        </p>
+
+    </section>
+{% endblock %}

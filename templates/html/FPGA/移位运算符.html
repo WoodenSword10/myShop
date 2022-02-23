@@ -1,0 +1,184 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}移位运算符{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <h2>移位运算符</h2>
+        <br/>
+        <p class="bg-info">
+            在Verilog HDL中有两种移位运算符，分别为“<<”(左移运算符)和“>>”(右移运算符)，用法如下：
+        </p>
+        <table class="table table-responsive-md table-striped table-bordered mx-auto">
+            <thead>
+                <th>情况</th>
+                <th>功能</th>
+                <th>verilog代码</th>
+                <th>电路示意图</th>
+                <th>备注</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>移位（右移：>>　左移：<<）</td>
+                    <td>A向右或向左移动后，赋值给B</td>
+                    <td>
+                        <code>
+                            reg[3:0] A;<br/>
+                            reg[2:0] B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;B = A >> 2;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;A[0] ------ X<br/>
+                        &nbsp;&nbsp;A[1] ------ X<br/>
+                        &nbsp;&nbsp;A[2] ------ B[0]<br/>
+                        &nbsp;&nbsp;A[3] ------ B[1]<br/>
+                        &nbsp;&nbsp;1`b0 ------ B[2]
+                    </td>
+                    <td>移位操作，实际上是选哪线相连。</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bg-dark" style="height: 1rem;"></div>
+        <h4>左移运算符</h4>
+        <p class="bg-info">
+            在Verilog HDL中，用“<<”表示左移运算符。其一般表达式为：<code>A << n;</code>其中，A代表要进行移位的操作数，
+            n代表要左移多少位。此表达式的意义是把操作数A左移n位。左移操作属于逻辑移位，需要用0来填补移出的空位，即在空位补0。
+            左移n位，就要补n个0。
+        </p>
+        <code>
+            wire[3:0] a;<br/>
+            assign a = 4`b0111 << 2
+        </code>
+        <p class="bg-info">
+            上述代码由于左移了２位，所以在低位补２个0，结果为：a = 4`b1100。<br/>
+            左移操作中有以下三点值得注意的地方：
+        </p>
+        <ul class="bg-info">
+            <li>左移操作是不消耗逻辑资源的，甚至连与门、或门都不需要，它只是线的连接。</li>
+            <code>
+                wire[3:0] c;<br/>
+                wire[3:0] b;<br/>
+                assign c = b << 2;<br/>
+            </code>
+            <p>
+                上面代码是将信号b左移两位并赋给c，其所对应的硬件电路如下：<br/>
+                b[1] --------- c[3]<br/>
+                b[0] --------- c[2]<br/>
+                1`b0 --------- c[1]<br/>
+                1`b0 --------- c[0]<br/>
+            </p>
+            <li>左移操作需根据位宽储存结果</li>
+            <li>左移操作的操作数可以是常数，也可以是信号。同样，左移操作的移位数、常数也可以是信号</li>
+            <code>
+                reg[4:0] a;<br/>
+                reg[2:0] cnt;<br/>
+                always @(posedge clk or negedge rst_n)begin<br/>
+                &nbsp;&nbsp;if(rst_n==1`b0)begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;cnt <= 0;<br/>
+                &nbsp;&nbsp;end<br/>
+                &nbsp;&nbsp;else begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;cnt <= cnt + 1;<br/>
+                &nbsp;&nbsp;end<br/>
+                end<br/>
+                always @(*)begin<br/>
+                &nbsp;&nbsp;a = 4`b1 << cnt;<br/>
+                end
+            </code>
+            <p>
+                上面代码中cnt每个时钟加1，由于是3比特，所以值为0-2。a则是4`b1左移cnt位。<br/>
+                当cnt等于0时左移0位，a等于4`b1；当cnt等于１时左移１位，a等于4`b10。以此类推，a的每个时钟变化情况如下所示：
+            </p>
+            <img class="img-fluid w-auto rounded mx-auto d-block" src={% static 'img/信号随时钟变化情况.jpg' %}>
+            <p>
+                需要注意的是，当移位数是信号时，其综合的电路并不是简单的连线，可能会综合如下图所示的选择器。然而即便如此，这种硬件所消耗的资源依然比较少。
+            </p>
+            <img class="w-auto img-fluids rounded mx-auto d-block" src={% static 'img/选择器电路.jpg' %}>
+        </ul>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h4>右移运算符</h4>
+        <br/>
+        <p class="bg-info">
+            在Verilog HDL中，用“>>”表示右移运算符，其一般表达式为：<code>A >> n;</code>其中，A代表要进行移位的操作数，n代表要右移多少位。此代码表示的意义是把操作数A右移n位。<br/>
+            在右移操作中有以下三点值得注意的地方：
+        </p>
+        <ul class="bg-info">
+            <li>右移操作属于逻辑移位，需要用0来填补出的空位，即在高位补0，补多少个0，取决于保存结果的信号的位宽。</li>
+            <code>
+                wire[5:0] a;<br/>
+                assign a = 4`b0111 << 2;
+            </code>
+            <p>
+                4`b0111右移两位后的结果为2`b01，由于a是６位的，位赋值给6位需要在高位补0，因此，需要补4个0。所以上面代码运行结果是：a=6`b000001;
+            </p>
+            <li>与左移操作相似，右移操作是不消耗逻辑资源的，甚至连与门、或门都不需要，其只是线的连接。</li>
+            <code>
+                wire[3:0] a;<br/>
+                wire[3:0] b;<br/>
+                assign a = b >> 2;
+            </code>
+            <p>
+                上面的代码是将信号b左移两位并赋给a，其所对应的硬件电路如下图所示。<br/>
+                1`b0 ----------- a[3]<br/>
+                1`b0 ----------- a[2]<br/>
+                b[3] ----------- a[1]<br/>
+                b[2] ----------- a[0]
+            </p>
+            <li>左移操作的操作数可以是常数，也可以是信号。同样，右移操作的移位数可以是常数，也可以是信号。</li>
+            <code>
+                reg[4:0] a;<br/>
+                reg[2:0]　cnt;<br/>
+                always @(posedge clk or negedge rst_n)begin<br/>
+                &nbsp;&nbsp;if(rst_n==1`b0)begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;cnt <= 0;<br/>
+                &nbsp;&nbsp;end<br/>
+                &nbsp;&nbsp;else begin<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;cnt <= cnt +1;<br/>
+                &nbsp;&nbsp;end
+                end
+                always @(*)begin<br/>
+                &nbsp;&nbsp;a = 4`b1000>>cnt;<br/>
+                end
+            </code>
+            <p>
+                上面的代码中，cnt每个时钟加１，由于是3比特，所以值为0-2。a则是4`b1000右移cnt位。当cnt等于0时右移0位，a等于4`b1000;
+                当cnt等于１时右移１位，a等于4`b0100。以此类推，a的每个时钟变化情况如下图所示。
+            </p>
+            <img class="img-fluid w-auto rounded mx-auto d-block" src={% static 'img/右移信号随时钟变化情况.jpg' %}>
+            <p>
+                与左移操作类似，在右移操作中，如果移位数是信号时，其综合的电路就不是简单的连线，而是有可能会综合出如下图的选择器。
+                然而同样在这一情况下，这种硬件电路所消耗的资源依然比较少。
+            </p>
+            <img class="rounded mx-auto d-block img-fluid w-auto" src={% static 'img/右移选择器电路.jpg' %}>
+        </ul>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h4>经验总结</h4>
+        <br/>
+        <ul class="bg-info">
+            <li>通过左移乘法运算</li>
+            <p>
+                FPGA中要尽量避免乘法运算，因为这种计算需要占用较大的硬件资源，并且运算速度较慢。当不得不使用乘法的时候，尽量乘以2的N次方，
+                这样设计中可以利用左移运算来实现该乘法运算，从而大大减少硬件资源。<br/>
+                即使乘数不是2的N次方的常数，也可以通过移位运算来简化实现。<br/>
+                现在综合工具都很强大，当工具发现乘法是常数时会自动按上述过程进行优化，也就是说乘以常数在实质上并不消耗乘法器资源，可以放心使用。
+            </p>
+            <li>利用右移实现除法运算</li>
+            <p>
+                FPGA设计中要极力避免除法，甚至是严禁使用“/”来用于除法计算。这是由于除法器会占用极大的资源，其占用资源量要多于乘法器，而且很多时候不能在一个时钟周期内得出结果。
+                而当不得不使用除法的时候，应尽量使除法转化为除以2的N次方形式，这样便可以利用右移运算来实现该除法运算，从而大大减少硬件资源。<br/>
+                当除数是2的N次方的常数时，就可以用移位运算来实现除法。例如：a/2，等价于a>>1；a/4，等价于a>>2；以此类推。<br/>
+                与左移不同的是，当除数不是2的N次方的常数时，不能简单地通过移位运算来简化实现。<br/>
+                总而言之，在FPGA设计中应尽力避免除法。
+            </p>
+            <li>利用左移位产生独热码</li>
+            <p>
+                独热码，也叫one-hot code，就是只有１个比特为１，其他全为0的一种码制。<br/>
+                独热码在设计时非常有用，可以用来表示状态机的状态使状态机更健壮，也可以用于多选一的电路中，表示选择其中的一种。<br/>
+                利用左移位操作，可以方便地产生独热码，例如产生4`b0010，可以是4`b1 << 1。<br/>
+                类似地，也可以产生1个比特为0，其他为1的码制。例如产生4`b1011，可以是~(4`b1 << 2)。<br/>
+                利用左移操作，还可以产生其他需要的数字结果。
+            </p>
+        </ul>
+    </section>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}算术运算符{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <table class="table table-bordered table-dark mx-auto text-sm-center">
+            <thead>
+                <tr>
+                    <th>分类</th>
+                    <th>功能</th>
+                    <th>代码</th>
+                    <th>电路示意图</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>加法器</td>
+                    <td>两数相加</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br>
+                            &nbsp;&nbsp;C=A+B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img src={% static 'img/FPGA加法器.jpg' %}></td>
+                    <td rowspan="2">
+                        本质上，运算逻辑都是由与门、或门等门逻辑搭建起来的电路，例如１位的加法器就是S=A^B;Cout=A&&B
+                    </td>
+                </tr>
+                <tr>
+                    <td>减法器</td>
+                    <td>两数相减</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A+B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img src={% static 'img/FPGA减法器.jpg' %}></td>
+                </tr>
+                <tr>
+                    <td>乘法器</td>
+                    <td>两数相乘</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A*B<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img src={% static 'img/FPGA乘法器.jpg' %}></td>
+                    <td>
+                        在二进制运算中，乘法运算实质上就是加法运算，例如1111*111 = (111)+(11110)。所以乘法器会比加法器消耗的资源多。
+                    </td>
+                </tr>
+                <tr>
+                    <td>除法器</td>
+                    <td>两数相除</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A/B<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img src={% static 'img/FPGA除法器.jpg' %}></td>
+                    <td rowspan="2">
+                        二进制运算中，除法和取余涉及到加法、减法和移位等运算，所以除法和求余电路资源都非常大，在设计时要尽力避免除法和求余。
+                        如果一定要用到除法，尽力让除数为２的n次方，如2、4、8、16等。因为a/2实质就是a向右移1位；a/4实质就是a向右移2位。移位运算是不消耗资源的。
+                    </td>
+                </tr>
+                <tr>
+                    <td>求余器</td>
+                    <td>两数求余</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=A%B;<br/>
+                            end
+                        </code>
+                    </td>
+                    <td><img src={% static 'img/FPGA取余器.jpg' %}></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            算术运算符包括加法“＋”、减法“－”、乘法“*”、除法“/”和求余“％”，其中常用的算术运算符主要有：加法“＋”、减法“－”和乘法“*”<br/>
+            注意，常用的运算符中不包括除法和求余运算符，这是由于除法和求余不是简单的门逻辑搭建起来的，其对应的硬件电路比较大。加减法是最简单的运算，
+            而乘法　可以拆解成多个加法运算，因此加减法、乘法所对应的电路都比较小。
+        </p>
+        <div class="bg-dark" style="height: 1rem;"></div>
+        <h2>信号位宽</h2>
+        <br/>
+        <p class="bg-info">
+            在写代码时，需要注意信号的位宽，最终的结果取决于“＝”号左边的信号的位宽，保存低位，丢弃高位。
+        </p>
+        <code>
+            &nbsp;&nbsp;wire c;<br/>
+            &nbsp;&nbsp;wire[1:0] d;<br/>
+            &nbsp;&nbsp;wire[2:0] e;<br/>
+            &nbsp;&nbsp;wire[2:0] f;<br/>
+            &nbsp;&nbsp;assign c = 1`b1 + 1`b1;<br/>
+            &nbsp;&nbsp;assgin d = 1`b1 + 1`b1;<br/>
+            &nbsp;&nbsp;assign e = 1`b1 + 1`b1;<br/>
+            &nbsp;&nbsp;assign f = 1 + 1
+        </code>
+        <p class="bg-info">
+            信号c的位宽为１位，所以运算的结果最终保留最低１位，因此c的值为1`b0。<br/>
+            由于d的位宽有２位，所以运算的结果可以保留最低２位，因此d的值为2`b10。<br/>
+            由于e的位宽有３位，所以运算的结果可以保留最低３位，因此e的值为3`b010。<br/>\
+            "１"默认是32位，1+1的结果也是32位，但由于f的位宽只有３位，所以运算结果可以保留低３位，因此f的值为3`b010。<br/>
+            减法运算也是相同的道理。<br/>
+            在写乘法代码时，同样需要注意信号的位宽，最终的结果取决于“*”号左边信号的位宽，保持低位，丢弃高位。
+        </p>
+        <code>
+            &nbsp;&nbsp;wire c;<br/>
+            &nbsp;&nbsp;wire[1:0] d;<br/>
+            &nbsp;&nbsp;wire[2:0] e;<br/>
+            &nbsp;&nbsp;wire[3:0] f;<br/>
+            &nbsp;&nbsp;wire[4:0] h;<br/>
+            &nbsp;&nbsp;assign c = 2`b11 * 3`b101;<br/>
+            &nbsp;&nbsp;assign d = 2`b11 * 3`b101;<br/>
+            &nbsp;&nbsp;assign e = 2`b11 * 3`b101;<br/>
+            &nbsp;&nbsp;assign f = 2`b11 * 3`b101;<br/>
+            &nbsp;&nbsp;assign h = 2`b11 * 3`b101;
+        </code>
+        <p class="bg-secondary">
+            2`b11 * 3`b101:<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;1<br/>
+            &nbsp;&nbsp;*&nbsp;&nbsp;1&nbsp;&nbsp;0&nbsp;&nbsp;1<br/>
+            ____________________________________________________<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;1<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;0&nbsp;&nbsp;<br/>
+            1&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+            ___________________________________________________<br/>
+            1&nbsp;&nbsp;1&nbsp;&nbsp;1&nbsp;&nbsp;1
+        </p>
+        <p class="bg-info">
+            "2`b11 * 3`b101"得到的二进制值是“4`b1111”，但保存结果取决于“*”号左边信号的位宽。<br/>
+            c的位宽是１，保留最低１位，所以c的值为1`b1。<br/>
+            d的位宽是２，保留低２位，所以d的值为2`b11。<br/>
+            e的位宽是３，保留低３位，所以e的值为3`b111。<br/>
+            f的位宽是４，保留低４位，所以f的值为4`b1111。<br/>
+            需要注意的是h，该信号有５位，4`b1111赋给５位信号，结果是高位补0，所以其结果为5`b01111。
+        </p>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>补码的由来</h2>
+        <br/>
+        <p class="bg-info">
+            FPGA实现各种算法的时候，首要的就是保证运算结果的正确性，否则一切毫无意义。
+            在分析加法运算符和减法运算符的时候可以发现保存结果的信号位宽是否合理对正确性与否有很大的影响。<br/>
+            如果不保留进位，当加法出现进位的时候计算的结果是不正确的，只有保留了进位计算的结果才是正确的。<br/>
+            由此可以得到一个结论：使用加法的时候，为了保证结果的正确性，必须保存进位，也就是结果要扩展位宽。<br/>
+            <br/>
+            而对于减法运算，当期望结果中有正负之分时，可以通过增加一个符号位来区别结果的正负。业内约定的表示方法为，最高位为0时表示正数，最高位值为1时表示负数，
+            符号位之后的数值用后面的位表示。<br/>
+            仅这样增加符号位后还是会存在部分运算结果与预期不符合的问题。所以需要重新对二进制数进行转换：<br/>
+            1: 正数：保持不变<br/>
+            2: 负数：符号位保持不变，数值取反加１。<br/>
+            <br/>
+            总结运算步骤如下：
+        </p>
+        <ul class="bg-info">
+            <li>根据”人的常识“，预计结果的最大最小值，从而确定结果的信号位宽</li>
+            <li>将加数、减数等数据，位宽扩展成结果位宽一致</li>
+            <li>按二进制加减法进行计算</li>
+        </ul>
+        <p class="bg-info">
+            通过以上方式，得到的就是补码的结果。事实上，在FPGA甚至计算机系统中，所有数据的保存的方式都是补码的形式。
+        </p>
+
+    </section>
+{% endblock %}

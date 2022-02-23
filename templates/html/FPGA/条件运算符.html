@@ -1,0 +1,81 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}条件运算符{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <table class="table table-bordered table-striped table-responsive-md mx-auto">
+            <thead>
+                <th>分类</th>
+                <th>情况</th>
+                <th>功能</th>
+                <th>代码</th>
+                <th>备注</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3">选择器</td>
+                    <td>常见形式１</td>
+                    <td>通过S，选择输入给输出C</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;case(S)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;2`b00 : C=D0;<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;2`b01 : C=D1;<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;2`b10 : C=D2;<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;default : C=D3;<br/>
+                            &nbsp;&nbsp;endcase<br/>
+                            end
+                        </code>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>常见形式２</td>
+                    <td>通过S，选择输入给输出C</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;C=D[S];<br/>
+                            end
+                        </code>
+                    </td>
+                    <td>此时代码亦常用，其本质也是选择器。</td>
+                </tr>
+                <tr>
+                    <td>用if-else</td>
+                    <td>通过判断s来选择</td>
+                    <td>
+                        <code>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;if(S==0)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;C=D0;<br/>
+                            &nbsp;&nbsp;else if(S=2`b01)<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;C=D1;<br/>
+                            &nbsp;&nbsp;else<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;C=D2;
+                            &nbsp;&nbsp;end
+                            end
+                        </code>
+                    </td>
+                    <td>请注意此处用到了相等比较器和选择器</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>三目运算符</h2>
+        <br/>
+        <p class="bg-info">
+            Verilog HDL语法中条件运算符（ ? : ）带有三个操作数（即三目运算符），其格式一般表达式为：<br/>
+            条件表达式?真表达式:假表达式：<br/>
+            condition_expr?true_expr:false_expr:<br/>
+            其含义为：当“条件表达式”为真（即逻辑１），执行“真表达式”；当“条件表达式”为假（即逻辑0），执行“假表达式”。<br/>
+            条件运算符的使用有以下几点需要注意的地方：
+        </p>
+        <ul>
+            <li>条件表达式作用实际上类似于多路选择器。同时，其可以用if-else语句来替代。</li>
+            <li>条件运算符可用在数据流建模中的条件赋值，这种情况下条件表达式的作用相当于控制开关</li>
+            <li>条件运算符也可以嵌套使用，每个“真表达式”和“假表达式”本身就可以是一个条件表达式</li>
+        </ul>
+    </section>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}程序语句{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <h2>assign语句</h2>
+        <br/>
+        <p class="bg-info">
+            assign语句是连续赋值语句，一般是将一个变量的值不间断地赋值给另一变量；两个变量之间就类似于被导线连在一起，习惯上当做连线来使用。<br/>
+            assign语句的基本格式是：
+        </p>
+        <code>assign a = b (逻辑运算符) c …</code>
+        <p class="bg-info">assgin语句的功能属于组合逻辑的范畴，应用范围可以概况为以下几点：</p>
+        <ul>
+            <li>持续赋值</li>
+            <li>连线</li>
+            <li>对wire型变量赋值，wire是线网，相当于实际的连线，如果要用assign直接连接，就用wire型变量，wire型变量的值随时发生变化。</li>
+        </ul>
+        <p class="bg-danger">需要注意的是，多条assign连续赋值语句之间互相独立，并行执行。</p>
+
+        <div class="bg-black" style="height: 1rem"></div>
+
+        <h2>always语句</h2>
+        <br/>
+        <p class="bg-info">
+            always语句是条件循环语句，执行机制是通过一个称为敏感变量表的事件驱动来实现的，always语句的基本格式是：
+        </p>
+        <code>
+            always@(敏感事件)begin<br/>
+            程序语句<br/>
+            end
+        </code>
+        <p class="bg-info">
+            always是"一直、总是"的意思，＠后面跟着事件。整个always的意思是：当敏感事件的条件满足时，就执行一次”程序语句“。
+            敏感事件每满足一次，就执行”程序语句“一次。
+        </p>
+        <code>
+            // 案例：<br/>
+            always @(a or b or d)begin<br/>
+            if (sel==0)<br/>
+            c=a+b;<br/>
+            else<br/>
+            c=a+d;<br/>
+            end
+        </code>
+        <p class="bg-info">
+            这段语句的意思是：当信号a或者信号b或者信号d发生变化时，就执行一次下面语句，在执行该语句时，先判断信号sel是否为０．如果为０，则执行第三行代码，
+            如果不为０，则执行第五行代码。需要强调的是，a,b,c任意一个发生变化一次，2行至5行也只执行一次，不会执行第二次。<br/>
+            此处需要注意，仅仅sel这个信号发生变化是不会执行第2行到5行代码的，通常这并不符合设计者的想法。例如，一般设计者的想法是：当sel为0时c的结果是a+b，
+            当sel不为0时c的结果是a+b。但是如果触发条件没有发生改变，虽然sel由0变１，但此时c的结果仍是a+b。因此，这并不是一个规范的设计思维。<br/>
+            对上述代码进行优化，当信号a、信号b、信号d或者信号sel发生变化时，就执行2行至5行。这样就可以确保sel信号值为0时，c的结果一定为a+b，当sel不为0时，
+            c的结果一定是a+b。因此要在敏感列表中加入sel，其代码如下所示。
+        </p>
+        <code>
+            always @(a or b or d or sel)begin<br/>
+            if (sel==0)<br/>
+            c=a+b;<br/>
+            else<br/>
+            c=a+d;<br/>
+            end
+        </code>
+        <p class="bg-info">当敏感信号非常多时很容易就会把敏感信号遗漏，为避免这种情况可以用”×“来代替。这个”×“是指”程序语句“中所有的条件信号，即a、b、d、sel(不包括c)，也推荐这种写法。</p>
+        <code>
+            always @(*)begin<br/>
+            if(sel==0)<br/>
+            c=a+b;<br/>
+            else<br/>
+            c=a+d;<br/>
+            end
+        </code>
+        <p class="bg-info">这种条件信号变化结果立即变化的always语句被称为”组合逻辑“</p>
+        <code>
+            always @(posedge clk)begin<br/>
+            if(sel==0)<br/>
+            c<=a+b;<br/>
+            else<br/>
+            c<=a+d;<br/>
+            end<br/>
+        </code>
+        <p class="bg-info">
+            上述代码敏感列表是”posedge clk“，其中posedge表示上升沿。也就是说，当clk由0变成１的瞬间执行一次程序代码，即第2至5行，其他时刻c的值保持不变。
+            要特别强调的是：如果clk没有由0变成１，那么即使a、b、d、sel发生变化，c的值也是不变的。
+        </p>
+        <code>
+            always @(negedge clk)begin<br/>
+            if(sel==0)<br/>
+            c<=a+b;<br/>
+            else<br/>
+            c<=a+d;<br/>
+            end
+        </code>
+        <p class="bg-info">
+            上述代码敏感列表是”negedge clk“，其中negedge表示下降沿。也就是说，当clk由1变成0的瞬间执行一次程序代码，即第2至5行，其他时刻c的值保持不变。
+            要特别强调的是，如果clk没有由1变成0，那么即使a、b、d、sel发生变化，c的值也是不变的。
+        </p>
+        <code>
+            always @(posedge clk or negedge rst_n)begin<br/>
+            if (rst_n==1`b0)begin<br/>
+            c<=0;<br/>
+            end<br/>
+            else if(sel==0)<br/>
+            c<=a+b;<br/>
+            else<br/>
+            c<=a+d;<br/>
+            end
+        </code>
+        <p class="bg-info">
+            上述代码的敏感列表是“posedge clk or negedge clk”，也就是说，
+            当clk由0变成1的瞬间或rst_n由１变化0的瞬间，执行一次程序代码，即第2至8行，其他时刻c的值保持不变。<br/>
+            这种信号边沿触发，即信号上升沿或者下降沿才变化的always，被称为“时序逻辑”，此时信号clk是时钟。<br/>
+            注意：识别信号是不是时钟不是看名称，而是看这个信号放在哪里，只有放在敏感列表并且是边沿触发的才是时钟。
+            而信号rst_n是复位信号，同样不是看名称，而是放在敏感列表中且同样边沿触发，更关键的是“程序语句”首先判断了rst_n的值，这表示rst_n优先级更高，一般都是用于复位。<br/>
+            设计时需要注意以下几点：
+        </p>
+        <ul>
+            <li>组合逻辑的always语句中敏感变量必须写全，或者用“*”代替</li>
+            <li>组合逻辑器件的赋值采用阻塞赋值“＝”，时序逻辑器件的赋值语句采用非阻塞赋值“<=”</li>
+        </ul>
+    </section>
+{% endblock %}
