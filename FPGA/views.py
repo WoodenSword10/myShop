@@ -39,3 +39,24 @@ def FPGA_GXYSF_view(request):
 
 def FPGA_YWYSF_view(request):
     return render(request, 'html/FPGA/移位运算符.html')
+
+def FPGA_TJYSF_view(request):
+    return render(request, 'html/FPGA/条件运算符.html')
+
+def FPGA_PJYSF_view(request):
+    return render(request, 'html/FPGA/拼接运算符.html')
+
+def FPGA_SXLJ_view(request):
+    return render(request, 'html/FPGA/时序逻辑.html')
+
+def FPGA_DCFQ_view(request):
+    return render(request, 'html/FPGA/D触发器.html')
+
+def FPGA_SZ_view(request):
+    return render(request, 'html/FPGA/时钟.html')
+
+def FPGA_SXLJDMHYJ_view(request):
+    return render(request, 'html/FPGA/时序逻辑代码和硬件.html')
+
+def FPGA_ZSFZ_view(request):
+    return render(request, 'html/FPGA/阻塞赋值和非阻塞赋值.html')

@@ -1,0 +1,51 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}拼接运算符{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <table class="table table-responsive-md table-striped table-bordered mx-auto">
+            <thead>
+                <th>情况</th>
+                <th>功能</th>
+                <th>verilog代码</th>
+                <th>电路示意图</th>
+                <th>备注</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>拼接（符号：{}）</td>
+                    <td>将大括号内的顺序按位置一对一连接</td>
+                    <td>
+                        <code>
+                            reg[3:0] A;<br/>
+                            reg[3:0] B;<br/>
+                            always@(*)begin<br/>
+                            &nbsp;&nbsp;B={A[2],A[3],A[0]};<br/>
+                            end
+                        </code>
+                    </td>
+                    <td>
+                        A[1] ------ X
+                        A[0] ------ B[0]
+                        A[3] ------ B[1]
+                        A[2] ------ B[2]
+                    </td>
+                    <td>拼接，实际上是选哪线相连</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            拼接操作是将小表达式合并形成大表达式的操作，其形式如下：<br/>
+            <code>{expr1, expr2, expr3,... exprN};</code><br/>
+            拼接符是不消耗任何硬件资源的，其只是把线换一种组合方式，可以参照如下实例：
+        </p>
+        <code>
+            wire[7:0] Dbus;<br/>
+            assign Dbus[7:4] = {Dbus[0], Dbus[1], Dbus[2], Dbus[3]};<br/>
+            // 以反转的顺序将低端4位赋给高端4位．<br/>
+            assign Dbus = {Dbus[3:0], Dbus[7:4]};<br/>
+            // 高4位和低4位交换
+        </code>
+        <p>由于非定长常数的长度未知，不允许连接非定长常数．如下所示代码是不符合语法规定的：<code>{Dbus, 5}</code></p>　　
+    </section>
+{% endblock %}

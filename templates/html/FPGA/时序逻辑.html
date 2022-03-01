@@ -1,0 +1,43 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}时序逻辑{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <h2>always语句</h2>
+        <br/>
+        <p>
+            时序逻辑的代码一般有两种：同步复位的时序逻辑和异步复位的时序逻辑．
+            在同步复位的时序逻辑中复位不是立即有效，而在时钟上升沿时复位才有效．<br/>
+            其代码结构如下：
+        </p>
+        <code>
+            always@(posedge clk)begin<br/>
+            &nbsp;&nbsp;if(rst_n==1`b0)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;代码语句;<br/>
+            &nbsp;&nbsp;else begin<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;代码语句;<br/>
+            &nbsp;&nbsp;end<br/>
+            end
+        </code>
+        <p>
+            在异步复位的时序逻辑中复位立即有效，与时钟无关．其代码结构如下：
+        </p>
+        <code>
+            always@(posedge clk or negedge rst_n)begin<br/>
+            &nbsp;&nbsp;if(rst_n==1`b0)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;代码语句;<br/>
+            &nbsp;&nbsp;else begin<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;代码语句;<br/>
+            &nbsp;&nbsp;end<br/>
+            end
+        </code>
+        <p>
+            针对时序逻辑的Verilog设计提出以下建议：<br/>
+            为了教学的方便代码统一采用异步时钟逻辑，建议都采用此结构，
+            这样设计时只需考虑是用时序逻辑还是组合逻辑结构来进行代码编写即可．<br/>
+            使用GVim软件打开代码后，输入"Zuhe"命令后回车可得到组合逻辑的代码结构，
+            输入"Shixu"命令后回车可得到时序逻辑的代码结果．<br/>
+            没有复位信号的时序逻辑代码设计是不规范的，建议不要这样使用．
+        </p>
+    </section>
+{% endblock %}

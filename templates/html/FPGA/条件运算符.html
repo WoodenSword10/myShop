@@ -77,5 +77,99 @@
             <li>条件运算符可用在数据流建模中的条件赋值，这种情况下条件表达式的作用相当于控制开关</li>
             <li>条件运算符也可以嵌套使用，每个“真表达式”和“假表达式”本身就可以是一个条件表达式</li>
         </ul>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h4>if-else语句</h4>
+        <br/>
+        <p>
+            if语句的语法如下：
+        </p>
+        <code>
+            if(condition_1)
+            &nbsp;&nbsp;procedural_statement_1;
+            {else if(condition_2)
+            &nbsp;&nbsp;procedural_statement_2};
+            {else
+            &nbsp;&nbsp;procedural_statement_3};
+        </code>
+        <p>
+            其含义为：如果对condition_1条件满足，不管其余条件是否满足，都执行procedural_statement_1，procedural_statement_2、procedural_statement_3都不执行。<br/>
+            注意条件表达式必须是用括号括起来，如果使用if-if-else格式，那么可能会有二义性．在Verilog HDL中已通过将else与最近的没有else的if语句相关联来解决<br/>
+            建议：
+        </p>
+        <ul>
+            <li>条件表达式需用括号括起来</li>
+            <li>若为if-if语句，请使用块语句begin-end</li>
+            <code>
+                if(clk)begin<br/>
+                &nbsp;&nbsp;if(reset)<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Q = 0;<br/>
+                &nbsp;&nbsp;else<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Q = D;<br/>
+                end
+            </code>
+        </ul>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>case语句</h2>
+        <br/>
+        <p class="bg-info">
+            case语句是一个多路条件分支形式，其语法如下：
+        </p>
+        <code>
+            case(case_expr)<br/>
+            &nbsp;&nbsp;case_item_expr(case_item_expr):procedural_statement<br/>
+            &nbsp;&nbsp;．．．．．．<br/>
+            &nbsp;&nbsp;[default: procedural_statement]<br/>
+            endcase
+        </code>
+        <p class="bg-info">
+            case语句下首先对条件表达式case_expr求值，然后依次对各分支项求值并进行比较，执行第一个与条件表达式值相匹配的分支中的语句．<br/>
+            可以在１个分支中定义多个分支项，且这些值不需要互斥．缺省分支覆盖所有没有被分支表达式覆盖的其他分支．
+        </p>
+        <code>
+            case(HEX)<br/>
+            &nbsp;&nbsp;4`b0001: LED = 7`b1111001; //1<br/>
+            &nbsp;&nbsp;4`b0010: LED = 7`b0100100; //2<br/>
+            &nbsp;&nbsp;4`b0011: LED = 7`b0110000; //3<br/>
+            &nbsp;&nbsp;4`b0100: LED = 7`b0011001; //4<br/>
+            &nbsp;&nbsp;4`b0101: LED = 7`b0010010; //5<br/>
+            &nbsp;&nbsp;4`b0110: LED = 7`b0000010; //6<br/>
+            &nbsp;&nbsp;4`b0111: LED = 7`b1111000; //7<br/>
+            &nbsp;&nbsp;4`b1000: LED = 7`b0000000; //8<br/>
+            &nbsp;&nbsp;4`b1001: LED = 7`b0010000; //9<br/>
+            &nbsp;&nbsp;4`b1010: LED = 7`b0001000; //A<br/>
+            &nbsp;&nbsp;4`b1011: LED = 7`b0000011; //B<br/>
+            &nbsp;&nbsp;4`b1100: LED = 7`b1000110; //C<br/>
+            &nbsp;&nbsp;4`b1101: LED = 7`b0100001; //D<br/>
+            &nbsp;&nbsp;4`b1110: LED = 7`b0000110; //E<br/>
+            &nbsp;&nbsp;4`b1111: LED = 7`b0001110; //F<br/>
+            &nbsp;&nbsp;default: LED = 7`b1000000; //0<br/>
+            endcase
+        </code>
+        <p>书写建议：case语句的缺省项必须写，防止产生锁存器．</p>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>选择语句</h2>
+        <br/>
+        <p>
+            Verilog HDL语法中有一个常用的选择语句，其语法形式为：
+        </p>
+        <code>vect[a +:b]或vect[a -:b]</code>
+        <p>
+            vect为变量名字，a为起始位置，加号或者减号代表着升序或降序，b表示进行升序或降序的宽度．<br/>
+            vect[a +:b]等同于vect[a: a+b-1]，vect的区间从a小的方向进行b次计数．a可以是一个常数也可以是一个可变的数，但b必须是一个常数．<br/>
+            设计如下功能：当cnt==0时，将din[7:0]赋值给data[15:8]；当cnt==1时将din[7:0]赋值给data[7:0]．<br/>
+            代码可写成<code>data[15-8*cnt -:8]</code>.<br/>
+            选择语句的硬件电路如下所示：
+        </p>
+        <img class="img-fluid w-auto rounded d-block mx-auto" src={% static 'img/选择语句硬件电路图.jpg' %}>
+        <div class="bg-dark" style="height: 1rem"></div>
+        <h2>经验总结</h2>
+        <br/>
+        <p>
+            if语句和case语句是Verilog里两个非常重要的语句，if和case语句有一定的相关性，也有一定的区别．<br/>
+            相同的地方在于两者几乎可以实现一样的功能．<br/>
+            区别在于if语句的每个分支之间是有优先级的，综合得到的电路是类似级联的结构．case语句的每个分支是平等的，综合得到的电路则是一个多路选择器．因此，多个if-else-if语句综合得到的逻辑电路延时可能会比case语句稍大．<br/>
+            使用if-else语句语法表达起来更加直接．但是在运行速度比较关键的项目中，使用case语句的效果会更好．<br/>
+            但现在的仿真和综合工具已经足够强大，最后综合后的结果if-else与case语句其实并无不同，只不过两种不同的实现方式而已，因此基本上不用考虑这两者之间的区别．
+        </p>
     </section>
 {% endblock %}

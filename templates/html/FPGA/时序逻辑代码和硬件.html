@@ -1,0 +1,35 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}时序逻辑代码和硬件{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <code>
+            always @(posedge clk or negedge rst_n)begin<br/>
+            &nbsp;&nbsp;if(rst_n==1`b0)begin<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;q <= 0;<br/>
+            &nbsp;&nbsp;end<br/>
+            &nbsp;&nbsp;else begin<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;q <= a+d;<br/>
+            &nbsp;&nbsp;end<br/>
+            end
+        </code>
+        <p class="bg-info">与下列代码比较：</p>
+        <code>
+            always @(posedge clk or negedge rst_n)begin<br/>
+            &nbsp;&nbsp;if (rst_n==1`b0)begin<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;q<=0;<br/>
+            &nbsp;&nbsp;end<br/>
+            &nbsp;&nbsp;else begin<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;q <= c;<br/>
+            &nbsp;&nbsp;end<br/>
+            end<br/>
+
+            assign c = a+d;
+        </code>
+        <p class="bg-info">
+            从功能和综合的角度来说，两者完成一致。<br/>
+            第二个结构有利于仿真时观测a+d，也就是c的值，然后比对q和c的仿真波形，验证功能是否正确。<br/>
+            时序逻辑可以分成一个组合逻辑加一个D触发器
+        </p>
+    </section>
+{% endblock %}

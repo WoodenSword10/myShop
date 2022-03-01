@@ -1,0 +1,59 @@
+{% extends 'BASE.html' %}
+{% load static %}
+{% block mytitle %}时钟{% endblock %}
+{% block middle %}
+    <section class="container-fluid p-xl-5">
+        <p class="bg-info">
+          时钟信号是每隔固定时间上下变化的信号，本次上升沿和上一次上升沿之间占用的时间就是时钟周期，其倒数就是时钟频率。高电平占整个事件周期的时间，被称为占空比。<br/>
+          FPGA中时钟的占空比一般为50%，即高电平时间和低电平时间一样。其实占空比在FPGA内部没有太大的意义，因为FPGA使用的是时钟上升沿来触发，设计师们更关心的是时钟频率。<br/>
+          如果时钟的上升沿每秒出现一次，说明时钟的时钟周期为1秒，时钟频率为1Hz。如果上升沿每1毫秒出现一次，说明时钟的周期为1毫秒，时钟频率为1000Hz，或写成1kHz。<br/>
+          现在普通FPGA器件所支持的时钟频率范围一般不超过150M，高端器件一般不超过700M（注意：该值为经验值，实际时钟的频率与其具体器件和设计电路有关），所对应的时钟周期在纳秒级范围。<br/>
+          常用时钟频率及其对应时钟周期：
+        </p>
+        <table class="table table-bordered table-striped table-responsive-md mx-auto">
+            <thead>
+                <th>时钟频率</th>
+                <th>时钟周期</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>100KHz</td>
+                    <td>10000ns</td>
+                </tr>
+                <tr>
+                    <td>1MHz</td>
+                    <td>1000ns</td>
+                </tr>
+                <tr>
+                    <td>8MHz</td>
+                    <td>125ns</td>
+                </tr>
+                <tr>
+                    <td>50MHz</td>
+                    <td>20ns</td>
+                </tr>
+                <tr>
+                    <td>100MHz</td>
+                    <td>10ns</td>
+                </tr>
+                <tr>
+                    <td>125MHz</td>
+                    <td>8ns</td>
+                </tr>
+                <tr>
+                    <td>150MHz</td>
+                    <td>6.667ns</td>
+                </tr>
+                <tr>
+                    <td>200MHz</td>
+                    <td>5ns</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="bg-info">
+            时钟是FPGA中最重要的信号，其他所有信号在时钟上升沿统一变化。<br/>
+            时钟影响着整体电路的稳定。首先，时钟要非常稳定地进行跳动。其次，FPGA系统的时钟必定是越少越好，最好只存在一个时钟。<br/>
+            要求不要把信号放在时序逻辑敏感列表的原因。
+        </p>
+    </section>
+{% endblock %}

@@ -15,4 +15,11 @@ urlpatterns = [
     path('ljysf/', views.FPGA_LJYSF_view),
     path('gxysf/', views.FPGA_GXYSF_view),
     path('ywysf/', views.FPGA_YWYSF_view),
+    path('tjysf/', views.FPGA_TJYSF_view),
+    path('pjysf/', views.FPGA_PJYSF_view),
+    path('sxlj/', views.FPGA_SXLJ_view),
+    path('dcfq/', views.FPGA_DCFQ_view),
+    path('sz/', views.FPGA_SZ_view),
+    path('sxljdmhyj/', views.FPGA_SXLJDMHYJ_view),
+    path('zsfz/', views.FPGA_ZSFZ_view),
 ]
